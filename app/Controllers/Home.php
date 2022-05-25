@@ -6,8 +6,10 @@ class Home extends BaseController
 {
     public function index()
     {
-
-
-        return view('pages/login');
+        $data = [
+            'title' => 'Halaman Login Mahasiswa'
+        ];
+        echo view('templates/header', $data);
+        echo view('pages/login', $data);
     }
 }

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+    <?= $data; ?>
     <div class="container">
         <form action="<?= base_url('signup') ?>">
             <div class="row mb-3">

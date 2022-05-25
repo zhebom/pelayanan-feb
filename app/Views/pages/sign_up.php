@@ -1,22 +1,40 @@
 <div class="container">
+
     <form action='<?= base_url("pages/simpan"); ?>' method="post">
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">NPM </label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="npm" name="npm" autofocus>
+                <input type="number" class="form-control <?= ($validasi->hasError('npm') ? 'is-invalid' : ''); ?>" id="npm" name="npm" autofocus value="<?= old('npm'); ?>">
+                <?php if (!empty($validasi->getError('npm'))) { ?>
+                    <button class="btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('npm');
+                                                                    } ?>
+                    </button>
+
+
+
             </div>
         </div>
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="nama" name="nama">
+                <input type="text" class="form-control <?= ($validasi->hasError('nama') ? 'is-invalid' : ''); ?>" id="nama" name="nama" value="<?= old('nama'); ?>">
+                <?php if (!empty($validasi->getError('nama'))) { ?>
+                    <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('nama');
+                                                                        } ?>
+                    </button>
             </div>
+
         </div>
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" name="email">
+                <input type="email" class="form-control <?= ($validasi->hasError('email') ? 'is-invalid' : ''); ?>" id="email" name="email" value="<?= old('email'); ?>">
+                <?php if (!empty($validasi->getError('email'))) { ?>
+                    <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('email');
+                                                                        } ?>
+                    </button>
             </div>
+
         </div>
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Jurusan</label>
@@ -32,37 +50,62 @@
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Alamat</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="alamat" name="alamat">
+                <input type="text" class="form-control <?= ($validasi->hasError('alamat') ? 'is-invalid' : ''); ?>" id="alamat" name="alamat" value="<?= old('alamat'); ?>">
+                <?php if (!empty($validasi->getError('alamat'))) { ?>
+                    <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('alamat');
+                                                                        } ?>
+                    </button>
             </div>
+
         </div>
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Tempat Lahir</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="tempatlahir" name="tempatlahir">
+                <input type="text" class="form-control <?= ($validasi->hasError('tempatlahir') ? 'is-invalid' : ''); ?>" id="tempatlahir" name="tempatlahir" value="<?= old('tempatlahir'); ?>">
+                <?php if (!empty($validasi->getError('tempatlahir'))) { ?>
+                    <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('tempatlahir');
+                                                                        } ?>
+                    </button>
             </div>
+
         </div>
         <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Tanggal Lahir</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" id="tanggallahir" name="tanggallahir">
+                <input type="date" class="form-control <?= ($validasi->hasError('tanggallahir') ? 'is-invalid' : ''); ?>" id="tanggallahir" name="tanggallahir" value="<?= old('tanggallahir'); ?>">
+                <?php if (!empty($validasi->getError('tanggallahir'))) { ?>
+                    <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('tanggallahir');
+                                                                        } ?>
+                    </button>
             </div>
+
         </div>
 
         <div class="row mb-3">
             <label for="inputPassword3" class="col-sm-2 col-form-label"> Buat Password</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="pass" name="pass">
+                <input type="password" class="form-control <?= ($validasi->hasError('pass') ? 'is-invalid' : ''); ?>" id="pass" name="pass">
+                <?php if (!empty($validasi->getError('pass'))) { ?>
+                    <button class="btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('pass');
+                                                                    } ?>
+                    </button>
             </div>
+
         </div>
 
         <div class="row mb-3">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Ulang Password</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="pass">
+                <input type="password" class="form-control <?= ($validasi->hasError('passconf') ? 'is-invalid' : ''); ?>" id="passconf" name="passconf">
+                <?php if (!empty($validasi->getError('passconf'))) { ?>
+                    <button class="btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('passconf');
+                                                                    } ?>
+                    </button>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Daftar</button>
 
     </form>
+
 </div>
 </div>

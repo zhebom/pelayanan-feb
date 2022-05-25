@@ -18,7 +18,12 @@ class Pages extends BaseController
 
     public function index()
     {
-        return view('pages/login');
+
+        $data = [
+            'title' => 'Halaman Login'
+        ];
+        echo view('templates/header', $data);
+        echo view('pages/login', $data);
     }
 
     public function home($page = 'sign_up')
@@ -29,13 +34,14 @@ class Pages extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
         }
 
+        $validasi =  \Config\Services::validation();
 
         $jurusan =  $this->daftarModel->findAll();
 
         $data = [
             'title' => 'Form Pendaftaran Akun Pelayanan Surat',
             'jurusan' => $jurusan,
-            'npm_user' => $this->request->getVar('npm')
+            'validasi' => $validasi
         ];
 
 
@@ -47,6 +53,52 @@ class Pages extends BaseController
     public function simpan()
     {
 
+        if (!$this->validate(
+            [
+                'npm' => 'required|min_length[10]|is_unique[feb_user.npm_user]',
+                'nama' => 'required',
+                'email' => 'required|valid_email',
+                'alamat' => 'required',
+                'tempatlahir' => 'required',
+                'tanggallahir' => 'required',
+                'pass' => 'required',
+                'passconf' => 'matches[pass]',
+            ],
+            [
+                'npm' => [
+                    'required' => 'NPM harus diisi',
+                    'min_length' => 'NPM yang anda masukkan salah',
+                    'is_unique' => 'NPM yang anda masukkan sudah terdaftar silahkan untuk melakukan reset password di pelayanan dengan membawa KTM',
+                ],
+                'nama' => [
+                    'required' => 'Nama harus diisi',
+                ],
+                'email' => [
+                    'required' => 'Email harus diisi',
+                    'valid_email' => 'Masukkan email yang benar'
+                ],
+                'alamat' => [
+                    'required' => 'Alamat harus diisi',
+                ],
+                'tempatlahir' => [
+                    'required' => 'Tempat lahir harus diisi',
+                ],
+                'tanggallahir' => [
+                    'required' => 'Tanggal lahir harus diisi',
+                ],
+                'pass' => [
+                    'required' => 'Password harus diisi',
+                ],
+                'passconf' => [
+                    'matches' => 'Password yang dimasukkan tidak sama',
+                ]
+            ]
+        )) {
+            return redirect()->to('/pages/home')->withInput();
+        }
+        $data = [
+            'i' => 'Sukses'
+        ];
 
         $today = date("Y-m-d H:i:s");
         $simpanModel = new SimpanModel();
@@ -64,6 +116,6 @@ class Pages extends BaseController
 
         ]);
 
-        return redirect()->to('/');
+        return redirect()->to('/pages/')->withInput()->with('i', $data);
     }
 }
