@@ -9,19 +9,26 @@
 </head>
 
 <body>
-    <?= $data; ?>
+
     <div class="container">
-        <form action="<?= base_url('signup') ?>">
+        <form action="<?= base_url('/pages/login') ?>">
             <div class="row mb-3">
-                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                <label class="col-sm-2 col-form-label ">NPM</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3">
+                    <input type="number" class="form-control <?= ($validasi->hasError('npm') ? 'is-invalid' : ''); ?>" id="npm" name="npm" autofocus value="<?= old('npm'); ?>">
+                    <?php if (!empty($validasi->getError('npm'))) { ?>
+                        <button class="btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('npm');
+                                                                        } ?>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword3">
+                    <input type="password" class="form-control <?= ($validasi->hasError('pass') ? 'is-invalid' : ''); ?>" id="pass" name="pass">
+                    <?php if (!empty($validasi->getError('pass'))) { ?>
+                        <button class="btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('pass');
+                                                                        } ?>
+                        </button>
                 </div>
             </div>
 
