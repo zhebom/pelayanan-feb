@@ -1,3 +1,4 @@
+hi <?= $npm_user; ?>
 <table class="table">
     <thead>
         <tr>
@@ -10,45 +11,46 @@
         </tr>
     </thead>
     <tbody>
-        <?php
+        <tr>
+            <?php
 
-        $i = '1';
-        if (!empty($mahasiswa)) {
-
-
-            foreach ($mahasiswa as $m) :
-
-        ?>
-
-                <th>
-                    <?= $i++; ?>
-                </th>
-                <td>
-                    <?= $m["npm_user"]; ?>
-                </td>
-                <td>
-                    <?= $m["nama_user"]; ?>
-                </td>
-
-                <td>
-                    <?= $m["jurusan_user"]; ?>
-                </td>
-
-                <td>
-
-                    <button class="btn btn-success">Detail</button>
-                    <button class="btn btn-warning">Ubah Password</button>
+            $i = '1';
+            if (!empty($mahasiswa)) {
 
 
-                </td>
-
-            <?php endforeach;
-        } else {
+                foreach ($mahasiswa as $m) :
 
             ?>
-            <th colspan="4">Data Tidak Ditemukan</th>
-        <?php
-        } ?>
+
+                    <th>
+                        <?= $i++; ?>
+                    </th>
+                    <td>
+                        <?= $m["npm_user"]; ?>
+                    </td>
+                    <td>
+                        <?= $m["nama_user"]; ?>
+                    </td>
+
+                    <td>
+                        <?= $m["jurusan_user"]; ?>
+                    </td>
+
+                    <td>
+
+                        <button class="btn btn-success" href="#">Detail</button>
+                        <button class="btn btn-warning" href="#">Ubah Password</button>
+
+
+                    </td>
+        </tr>
+    <?php endforeach;
+            } else {
+
+    ?>
+    <th colspan="5">Data Tidak Ditemukan</th>
+<?php
+            } ?>
 
 
     </tbody>

@@ -147,7 +147,8 @@ class Pages extends BaseController
         $pass =  $this->request->getVar('pass');
         $simpanModel = new SimpanModel();
         $ceklogin =  $simpanModel->where('npm_user', $npm)->first();
-        var_dump($ceklogin);
+
+
         if ($ceklogin) {
 
             //  echo "anda berhasil login";
@@ -155,9 +156,13 @@ class Pages extends BaseController
             // echo $pass;
             // echo "-";
             echo $ceklogin->pass_user;
-            if (password_verify($pass, $ceklogin->pass_user)) {
 
-                echo "password anda berhasil";
+            if (password_verify($pass, $ceklogin['pass_user'])) {
+                // membuat session
+                session()->set('npm_user', $cek['npm_user']);
+
+                return redirect()->to(base_url('pages/listuser'));
+                //echo "password anda berhasil";
             } else {
 
                 echo "password anda salah";
@@ -174,15 +179,18 @@ class Pages extends BaseController
             // Whoops, we don't have a page for that!
             throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
         }
+        $npm_user = session()->get('npm_user');
 
         $validasi =  \Config\Services::validation();
         $simpanModel = new SimpanModel();
         $jurusan =  $simpanModel->where('role', 3)->findAll();
+
         //var_dump($jurusan);
         $data = [
             'title' => 'Data Mahasiswa',
             'mahasiswa' => $jurusan,
-            'validasi' => $validasi
+            'validasi' => $validasi,
+            'npm_user' => $npm_user
         ];
 
 
