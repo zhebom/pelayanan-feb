@@ -1,6 +1,3 @@
-hi <?= $nama_user; ?>
-
-
 <table class="table">
     <thead>
         <tr>
@@ -35,13 +32,33 @@ hi <?= $nama_user; ?>
                     </td>
 
                     <td>
-                        <?= $m["jurusan_user"]; ?>
+                        <?php
+                        $key = $m["jurusan_user"];
+                        if ($key == 1) {
+                            echo "Manajemen";
+                        }
+                        if ($key == 2) {
+                            echo "Akuntansi";
+                        }
+                        if ($key == 3) {
+                            echo "Bisnis Digital";
+                        }
+                        if ($key == 4) {
+                            echo "Manajemen Perpajakan";
+                        }
+
+
+
+
+                        ?>
+
+
                     </td>
 
                     <td>
 
                         <button class="btn btn-success" href="#">Detail</button>
-                        <button class="btn btn-warning" href="#">Ubah Password</button>
+                        <button class="btn btn-warning" href="#">Reset</button>
 
 
                     </td>

@@ -24,7 +24,7 @@ class Pages extends BaseController
             'title' => 'Halaman Login',
             'validasi' => $validasi
         ];
-        echo view('templates/header', $data);
+        // echo view('templates/header', $data);
         echo view('pages/login', $data);
     }
 
@@ -47,9 +47,9 @@ class Pages extends BaseController
         ];
 
 
-        echo view('templates/header', $data);
+        // echo view('templates/header', $data);
         echo view('pages/' . $page, $data);
-        echo view('templates/footer', $data);
+        // echo view('templates/footer', $data);
     }
 
     public function simpan()
@@ -119,6 +119,28 @@ class Pages extends BaseController
         return redirect()->to('/pages/')->withInput()->with('i', $data);
     }
 
+    public function update($npm_user)
+    {
+
+
+
+        $simpanModel = new SimpanModel();
+        $simpanModel->update([
+            'npm_user' => $npm_user,
+            'nama_user' => $this->request->getVar('nama'),
+            'email_user' => $this->request->getVar('email'),
+            'jurusan_user' => $this->request->getVar('jurusan'),
+            'alamat_user' => $this->request->getVar('alamat'),
+            'tempat_user' => $this->request->getVar('tempatlahir'),
+            'lahir_user' => $this->request->getVar('tanggallahir')
+            // 'pass_user' => passwor($this->request->getVar('pass')),
+
+
+
+        ]);
+
+        return redirect()->to('/pages/profil')->withInput()->with('i', $data);
+    }
     public function login()
     {
         if (!$this->validate(
@@ -162,7 +184,8 @@ class Pages extends BaseController
                 // $npm = $session->set('npm_user', $cek['npm_user']);
                 $data = [
                     'npm_user' => $ceklogin['npm_user'],
-                    'nama_user' => $ceklogin['nama_user']
+                    'nama_user' => $ceklogin['nama_user'],
+                    'role' => $ceklogin['role']
 
                 ];
                 //$session = \Config\Services::session($config);
@@ -183,6 +206,12 @@ class Pages extends BaseController
             return redirect()->to(base_url());
         }
     }
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to(base_url());
+    }
 
     public function listuser($page = 'listuser')
     {
@@ -192,17 +221,26 @@ class Pages extends BaseController
         }
         $npm_user = session()->get('npm_user');
         $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
         $validasi =  \Config\Services::validation();
         $simpanModel = new SimpanModel();
         $jurusan =  $simpanModel->where('role', 3)->findAll();
+        // $daftar = $this->daftarModel->where(
+        //     'id_jurusan',
+        //     $key
+        // )->first();
 
-        //var_dump($jurusan);
         $data = [
             'title' => 'Data Mahasiswa',
             'mahasiswa' => $jurusan,
             'validasi' => $validasi,
             'npm_user' => $npm_user,
-            'nama_user' => $nama_user
+            'nama_user' => $nama_user,
+            'role' => $role
+            // 'daftar' => $daftar
+
+
+
         ];
 
 
@@ -210,10 +248,35 @@ class Pages extends BaseController
         echo view('mahasiswa/' . $page, $data);
         echo view('templates/footer', $data);
     }
-    public function logout()
+    public function profil($page = 'profil')
     {
-        $session = session();
-        $session->destroy();
-        return redirect()->to(base_url());
+
+        if (!is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $validasi =  \Config\Services::validation();
+
+        $jurusan =  $this->daftarModel->findAll();
+        $simpanModel = new SimpanModel();
+        $profil = $simpanModel->where('npm_user', $npm_user)->first();
+
+        $data = [
+            'title' => 'Profil Mahasiswa',
+            'jurusan' => $jurusan,
+            'validasi' => $validasi,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'role' => $role,
+            'profil' => $profil
+        ];
+
+
+        echo view('templates/header', $data);
+        echo view('mahasiswa/' . $page, $data);
+        echo view('templates/footer', $data);
     }
 }
