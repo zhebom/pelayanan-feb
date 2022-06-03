@@ -147,7 +147,7 @@ class Pages extends BaseController
         $pass =  $this->request->getVar('pass');
         $simpanModel = new SimpanModel();
         $ceklogin =  $simpanModel->where('npm_user', $npm)->first();
-
+        $session = session();
 
         if ($ceklogin) {
 
@@ -155,21 +155,32 @@ class Pages extends BaseController
             // echo "-";
             // echo $pass;
             // echo "-";
-            echo $ceklogin->pass_user;
+
 
             if (password_verify($pass, $ceklogin['pass_user'])) {
                 // membuat session
-                session()->set('npm_user', $cek['npm_user']);
+                // $npm = $session->set('npm_user', $cek['npm_user']);
+                $data = [
+                    'npm_user' => $ceklogin['npm_user'],
+                    'nama_user' => $ceklogin['nama_user']
+
+                ];
+                //$session = \Config\Services::session($config);
+
+                $session->set($data);
 
                 return redirect()->to(base_url('pages/listuser'));
                 //echo "password anda berhasil";
             } else {
-
-                echo "password anda salah";
+                //echo "password anda salah";
+                // $session = session();
+                $session->setFlashdata('msg', 'NPM atau Password yang anda masukkan salah');
+                return redirect()->to(base_url());
             }
         } else {
 
-            echo "anda gagal";
+            $session->setFlashdata('msg', 'NPM atau Password yang anda masukkan salah');
+            return redirect()->to(base_url());
         }
     }
 
@@ -180,7 +191,7 @@ class Pages extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
         }
         $npm_user = session()->get('npm_user');
-
+        $nama_user = session()->get('nama_user');
         $validasi =  \Config\Services::validation();
         $simpanModel = new SimpanModel();
         $jurusan =  $simpanModel->where('role', 3)->findAll();
@@ -190,12 +201,19 @@ class Pages extends BaseController
             'title' => 'Data Mahasiswa',
             'mahasiswa' => $jurusan,
             'validasi' => $validasi,
-            'npm_user' => $npm_user
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user
         ];
 
 
         echo view('templates/header', $data);
         echo view('mahasiswa/' . $page, $data);
         echo view('templates/footer', $data);
+    }
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to(base_url());
     }
 }

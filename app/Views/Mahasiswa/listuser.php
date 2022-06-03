@@ -1,4 +1,6 @@
-hi <?= $npm_user; ?>
+hi <?= $nama_user; ?>
+
+
 <table class="table">
     <thead>
         <tr>

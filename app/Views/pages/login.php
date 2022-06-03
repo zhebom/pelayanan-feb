@@ -11,6 +11,9 @@
 <body>
 
     <div class="container">
+        <?php if (session()->getFlashdata('msg')) : ?>
+            <div class="alert alert-danger"><?= session()->getFlashdata('msg') ?></div>
+        <?php endif; ?>
         <form action="<?= base_url('/pages/login') ?>">
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label ">NPM</label>

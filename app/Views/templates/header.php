@@ -22,6 +22,7 @@
                 <a class="navbar-brand" href="#"> Profil </a>
                 <a class="navbar-brand" href="/pages/listuser"> Data Mahasiswa </a>
                 <a class="navbar-brand" href="#"> Pelayanan Surat Online </a>
+                <a class="navbar-brand" href="/pages/logout"> Keluar </a>
             </div>
         </div>
 
