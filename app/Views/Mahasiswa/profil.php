@@ -1,9 +1,7 @@
 <body>
 
     <div class="container">
-        <?= $npm_user; ?>
 
-        <?= $id_user; ?>
 
         <form action='<?= base_url("pages/update/" . $id_user); ?>' method="post">
             <div class="row mb-3">
@@ -49,30 +47,20 @@
                 <div class="col-sm-10">
 
                     <select class="form-select" aria-label="Default select example" id='jurusan' name="jurusan">
-                        <option selected value="<?php $profil['jurusan_user']; ?>">
-                            <?php $opt = $profil['jurusan_user'];
-                            switch ($opt) {
-                                case 1:
-                                    echo "Manajemen";
-                                    break;
-                                case 2:
-                                    echo "Akuntansi";
-                                    break;
-                                case 3:
-                                    echo "Bisnis Digital";
-                                    break;
-                                case 4:
-                                    echo "Manajemen Perpajakan";
-                                    break;
-                                default:
-                                    echo "-";
-                            }
-                            ?></option>
-                        <?php foreach ($jurusan as $j) : ?>
-                            <option value="<?= $j['id_jurusan']; ?>">
+
+                        ?></option>
+                        <?php $select = $profil['jurusan_user'];
+                        foreach ($jurusan as $j) : ?>
+                            <option value="<?= $j['id_jurusan']; ?> " <?php if ($select == $j['id_jurusan']) {
+                                                                            echo "selected";
+                                                                        } ?>>
                                 <?= $j["nama_jurusan"]; ?></option>
                         <?php endforeach; ?>
                     </select>
+                    <?php if (!empty($validasi->getError('jurusan'))) { ?>
+                        <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('jurusan');
+                                                                            } ?>
+                        </button>
                 </div>
             </div>
             <div class="row mb-3">

@@ -132,7 +132,6 @@ class Pages extends BaseController
             'lahir_user' => $this->request->getVar('tanggallahir')
         ];
 
-
         $simpanModel->update($id_user, $data);
 
         return redirect()->to('/pages/profil')->withInput()->with('i', $data);
