@@ -1,3 +1,4 @@
+<?= $id_user; ?>
 <table class="table">
     <thead>
         <tr>

@@ -1,8 +1,14 @@
 <body>
 
     <div class="container">
+        <?= $npm_user; ?>
 
-        <form action='<?= base_url("pages/update"); ?>' method="post">
+        <?= $id_user; ?>
+
+        <form action='<?= base_url("pages/update/" . $id_user); ?>' method="post">
+            <div class="row mb-3">
+                <input type="text" id="id_user" name="id_user" value="<?= $profil['id_user']; ?>" hidden>
+            </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">NPM </label>
                 <div class="col-sm-10">
@@ -41,7 +47,27 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Jurusan</label>
                 <div class="col-sm-10">
+
                     <select class="form-select" aria-label="Default select example" id='jurusan' name="jurusan">
+                        <option selected value="<?php $profil['jurusan_user']; ?>">
+                            <?php $opt = $profil['jurusan_user'];
+                            switch ($opt) {
+                                case 1:
+                                    echo "Manajemen";
+                                    break;
+                                case 2:
+                                    echo "Akuntansi";
+                                    break;
+                                case 3:
+                                    echo "Bisnis Digital";
+                                    break;
+                                case 4:
+                                    echo "Manajemen Perpajakan";
+                                    break;
+                                default:
+                                    echo "-";
+                            }
+                            ?></option>
                         <?php foreach ($jurusan as $j) : ?>
                             <option value="<?= $j['id_jurusan']; ?>">
                                 <?= $j["nama_jurusan"]; ?></option>

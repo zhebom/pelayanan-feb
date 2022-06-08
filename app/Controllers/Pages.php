@@ -119,25 +119,21 @@ class Pages extends BaseController
         return redirect()->to('/pages/')->withInput()->with('i', $data);
     }
 
-    public function update($npm_user)
+    public function update($id_user)
     {
-
-
-
         $simpanModel = new SimpanModel();
-        $simpanModel->update([
-            'npm_user' => $npm_user,
+        $data = [
+
             'nama_user' => $this->request->getVar('nama'),
             'email_user' => $this->request->getVar('email'),
             'jurusan_user' => $this->request->getVar('jurusan'),
             'alamat_user' => $this->request->getVar('alamat'),
             'tempat_user' => $this->request->getVar('tempatlahir'),
             'lahir_user' => $this->request->getVar('tanggallahir')
-            // 'pass_user' => passwor($this->request->getVar('pass')),
+        ];
 
 
-
-        ]);
+        $simpanModel->update($id_user, $data);
 
         return redirect()->to('/pages/profil')->withInput()->with('i', $data);
     }
@@ -165,6 +161,7 @@ class Pages extends BaseController
         }
 
         //berhasil valildasi
+
         $npm = $this->request->getVar('npm');
         $pass =  $this->request->getVar('pass');
         $simpanModel = new SimpanModel();
@@ -182,7 +179,9 @@ class Pages extends BaseController
             if (password_verify($pass, $ceklogin['pass_user'])) {
                 // membuat session
                 // $npm = $session->set('npm_user', $cek['npm_user']);
+
                 $data = [
+                    'id_user' => $ceklogin['id_user'],
                     'npm_user' => $ceklogin['npm_user'],
                     'nama_user' => $ceklogin['nama_user'],
                     'role' => $ceklogin['role']
@@ -219,6 +218,7 @@ class Pages extends BaseController
             // Whoops, we don't have a page for that!
             throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
         }
+        $id_user = session()->get('id_user');
         $npm_user = session()->get('npm_user');
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
@@ -234,6 +234,7 @@ class Pages extends BaseController
             'title' => 'Data Mahasiswa',
             'mahasiswa' => $jurusan,
             'validasi' => $validasi,
+            'id_user' => $id_user,
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
             'role' => $role
@@ -255,6 +256,7 @@ class Pages extends BaseController
             // Whoops, we don't have a page for that!
             throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
         }
+        $id_user = session()->get('id_user');
         $npm_user = session()->get('npm_user');
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
@@ -268,6 +270,7 @@ class Pages extends BaseController
             'title' => 'Profil Mahasiswa',
             'jurusan' => $jurusan,
             'validasi' => $validasi,
+            'id_user' => $id_user,
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
             'role' => $role,

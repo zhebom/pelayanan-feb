@@ -10,5 +10,5 @@ class SimpanModel extends Model
     protected $createdField  = 'created_at';
     protected $useTimestamps = true;
     protected $primaryKey = 'id_user';
-    protected $allowedFields = ['npm_user', 'email_user', 'nama_user', 'jurusan_user', 'alamat_user', 'tempat_user', 'lahir_user', 'pass_user', 'role'];
+    protected $allowedFields = ['id_user', 'npm_user', 'email_user', 'nama_user', 'jurusan_user', 'alamat_user', 'tempat_user', 'lahir_user', 'pass_user', 'role'];
 }
