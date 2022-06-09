@@ -21,7 +21,7 @@
                 <!-- <a class="navbar-brand" href="#"> Beranda </a> -->
                 <a class="navbar-brand" href="/profil"> Profil </a>
                 <a class="navbar-brand" href="/mahasiswa"> Data Mahasiswa </a>
-                <a class="navbar-brand" href="#"> Pelayanan Surat Online </a>
+                <a class="navbar-brand" href="/surat"> Pelayanan Surat Online </a>
                 <a class="navbar-brand" href="/logout"> Keluar( <?= $nama_user ?>)</a>
             </div>
         </div>

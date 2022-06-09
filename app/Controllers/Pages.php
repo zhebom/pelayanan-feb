@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 use App\Models\DaftarModel;
 use App\Models\SimpanModel;
-
+use Config\View;
+use Dompdf\Dompdf;
 
 class Pages extends BaseController
 {
@@ -96,7 +97,7 @@ class Pages extends BaseController
                 ]
             ]
         )) {
-            return redirect()->to('/pages/home')->withInput();
+            return redirect()->to(base_url('/daftar'))->withInput();
         }
 
         $today = date("Y-m-d H:i:s");
@@ -284,5 +285,51 @@ class Pages extends BaseController
         echo view('templates/header', $data);
         echo view('mahasiswa/' . $page, $data);
         echo view('templates/footer', $data);
+    }
+
+    public function surat($page = 'surat')
+    {
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
+
+        $data = [
+            'title' => 'Pengajuan Surat',
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'role' => $role
+
+        ];
+        echo view('templates/header', $data);
+        echo view('mahasiswa/' . $page, $data);
+        echo view('templates/footer', $data);
+    }
+    public function convertpdf($page = 'listuser')
+    {
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
+
+        $data = [
+            'title' => 'Pengajuan Surat',
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'role' => $role
+
+        ];
+
+
+
+        $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHtml(view('mahasiswa/' . $page, $data));
+        $dompdf->setPaper('A4', 'potrait');
+        $dompdf->render();
+        $dompdf->stream();
     }
 }
