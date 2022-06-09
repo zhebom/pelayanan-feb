@@ -31,7 +31,13 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Pages::index');
+$routes->get('/login', 'Pages::index');
+// autentikasi kontroller pages
+$routes->get('/daftar', 'Pages::home');
+$routes->get('/profil', 'Pages::profil', ['filter' => 'auth']);
+$routes->get('/mahasiswa', 'Pages::listuser', ['filter' => 'auth']);
+$routes->get('/logout', 'Pages::logout', ['filter' => 'auth']);
+
 
 /*
  * --------------------------------------------------------------------

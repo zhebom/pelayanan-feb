@@ -183,14 +183,15 @@ class Pages extends BaseController
                     'id_user' => $ceklogin['id_user'],
                     'npm_user' => $ceklogin['npm_user'],
                     'nama_user' => $ceklogin['nama_user'],
-                    'role' => $ceklogin['role']
+                    'role' => $ceklogin['role'],
+                    'logged_id' => TRUE
 
                 ];
                 //$session = \Config\Services::session($config);
 
                 $session->set($data);
 
-                return redirect()->to(base_url('pages/listuser'));
+                return redirect()->to(base_url('mahasiswa'));
                 //echo "password anda berhasil";
             } else {
                 //echo "password anda salah";
@@ -221,6 +222,7 @@ class Pages extends BaseController
         $npm_user = session()->get('npm_user');
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
         $validasi =  \Config\Services::validation();
         $simpanModel = new SimpanModel();
         $jurusan =  $simpanModel->where('role', 3)->findAll();
@@ -236,8 +238,8 @@ class Pages extends BaseController
             'id_user' => $id_user,
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
-            'role' => $role
-            // 'daftar' => $daftar
+            'role' => $role,
+            'logged_in' => $logged_in
 
 
 
@@ -259,6 +261,7 @@ class Pages extends BaseController
         $npm_user = session()->get('npm_user');
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
         $validasi =  \Config\Services::validation();
 
         $jurusan =  $this->daftarModel->findAll();
@@ -273,6 +276,7 @@ class Pages extends BaseController
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
             'role' => $role,
+            'logged_in' => $logged_in,
             'profil' => $profil
         ];
 

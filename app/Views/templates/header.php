@@ -19,10 +19,10 @@
             </a>
             <div>
                 <!-- <a class="navbar-brand" href="#"> Beranda </a> -->
-                <a class="navbar-brand" href="/pages/profil"> Profil </a>
-                <a class="navbar-brand" href="/pages/listuser"> Data Mahasiswa </a>
+                <a class="navbar-brand" href="/profil"> Profil </a>
+                <a class="navbar-brand" href="/mahasiswa"> Data Mahasiswa </a>
                 <a class="navbar-brand" href="#"> Pelayanan Surat Online </a>
-                <a class="navbar-brand" href="/pages/logout"> Keluar( <?= $nama_user ?>)</a>
+                <a class="navbar-brand" href="/logout"> Keluar( <?= $nama_user ?>)</a>
             </div>
         </div>
 

@@ -1,5 +1,4 @@
-<body>
-
+<body><?= $logged_in; ?>
     <div class="container">
 
 

@@ -37,7 +37,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Login</button>
-            <a href="<?= base_url('pages/home'); ?>" type="submit" class="btn btn-secondary">Daftar</a>
+            <a href="<?= base_url('daftar'); ?>" type="submit" class="btn btn-secondary">Daftar</a>
         </form>
     </div>
     </div>
