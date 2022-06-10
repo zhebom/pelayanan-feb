@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\DaftarModel;
 use App\Models\SimpanModel;
 use Config\View;
+use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -293,26 +294,7 @@ class Pages extends BaseController
         $npm_user = session()->get('npm_user');
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
-        $logged_in = session()->get('logged_in');
-
-        $data = [
-            'title' => 'Pengajuan Surat',
-            'id_user' => $id_user,
-            'npm_user' => $npm_user,
-            'nama_user' => $nama_user,
-            'role' => $role
-
-        ];
-        echo view('templates/header', $data);
-        echo view('mahasiswa/' . $page, $data);
-        echo view('templates/footer', $data);
-    }
-    public function convertpdf()
-    {
-        $id_user = session()->get('id_user');
-        $npm_user = session()->get('npm_user');
-        $nama_user = session()->get('nama_user');
-        $role = session()->get('role');
+        $profil = $simpanModel->where('npm_user', $npm_user)->first();
         $logged_in = session()->get('logged_in');
 
         $data = [
@@ -321,9 +303,85 @@ class Pages extends BaseController
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
             'role' => $role,
-
+            'profil' => $profil
 
         ];
+        echo view('templates/header', $data);
+        echo view('mahasiswa/' . $page, $data);
+        echo view('templates/footer', $data);
+    }
+    public function aktifkuliah($page = 'aktif-kuliah')
+    {
+        // $id_user = session()->get('id_user');
+        // $npm_user = session()->get('npm_user');
+        // $nama_user = session()->get('nama_user');
+        // $role = session()->get('role');
+
+        // $logged_in = session()->get('logged_in');
+
+        // $data = [
+        //     'title' => 'Pengajuan Surat',
+        //     'id_user' => $id_user,
+        //     'npm_user' => $npm_user,
+        //     'nama_user' => $nama_user,
+        //     'role' => $role,
+
+
+        // ];
+
+        if (!is_file(APPPATH . 'Views/surat/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
+        $validasi =  \Config\Services::validation();
+
+        $jurusan =  $this->daftarModel->findAll();
+        $simpanModel = new SimpanModel();
+        $profil = $simpanModel->where('npm_user', $npm_user)->first();
+
+        $data = [
+            'title' => 'Surat keterangan Aktif Kuliah',
+            'jurusan' => $jurusan,
+            'validasi' => $validasi,
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'role' => $role,
+            'logged_in' => $logged_in,
+            'profil' => $profil
+        ];
+
+
+
+        $day = explode("-", $profil['lahir_user']);
+        // $day =  $profil['lahir_user'];
+        $arday = array($day[2], $day[1], $day[0]);
+        $day1 = implode("-", $arday);
+        $jur = $profil['jurusan_user'];
+        switch ($jur) {
+            case 1:
+                $jur = "Manajemen";
+
+                break;
+            case 2:
+                $jur = "Akuntansi";
+
+                break;
+            case 3:
+                $jur = "Bisnis Digital";
+                break;
+            case 4:
+                $jur = "D3 - Manajemen Perpajakan";
+                break;
+            default:
+                $jur = "anda belum memilih jurusan";
+                break;
+        }
         $html1 = '
         
             <table>
@@ -367,12 +425,12 @@ class Pages extends BaseController
     <tr>
         <td>Program Studi</td>
         <td>:</td>
-        <td></td>
+        <td>' . $jur . '</td>
     </tr>
     <tr>
         <td>Tempat, Tanggal Lahir</td>
         <td>:</td>
-        <td>' . $profil['tempat_user'] . '</td>
+        <td>' . $profil['tempat_user'] . ', ' . $day1 . '</td>
     </tr>
     <tr>
         <td>Alamat</td>
@@ -402,7 +460,7 @@ class Pages extends BaseController
     </tr>
 </table>';
 
-
+        $html2 =  view('surat/' . $page, $data);
         $Options = new Options();
         $Options->set('chroot', realpath(''));
         $dompdf = new Dompdf($Options);

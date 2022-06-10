@@ -84,6 +84,6 @@
     <a class="btn btn-success" href="<?= base_url('profil'); ?>">
         Isi Keterangan Yang Kosong
     </a>
-    <a class="btn btn-danger" href="<?= base_url('pages/convertpdf/'); ?>">
+    <a class="btn btn-danger" href="<?= base_url('pages/aktifkuliah/'); ?>">
         Cetak Surat
     </a>
