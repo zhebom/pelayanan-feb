@@ -6,6 +6,7 @@ use App\Models\DaftarModel;
 use App\Models\SimpanModel;
 use Config\View;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class Pages extends BaseController
 {
@@ -24,8 +25,7 @@ class Pages extends BaseController
         $data = [
             'title' => 'Halaman Login',
             'validasi' => $validasi
-        ];
-        // echo view('templates/header', $data);
+        ];     //  view('templates/header', $data);
         echo view('pages/login', $data);
     }
 
@@ -307,7 +307,7 @@ class Pages extends BaseController
         echo view('mahasiswa/' . $page, $data);
         echo view('templates/footer', $data);
     }
-    public function convertpdf($page = 'listuser')
+    public function convertpdf()
     {
         $id_user = session()->get('id_user');
         $npm_user = session()->get('npm_user');
@@ -320,16 +320,133 @@ class Pages extends BaseController
             'id_user' => $id_user,
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
-            'role' => $role
+            'role' => $role,
+
 
         ];
+        $html1 = '
+        
+            <table>
+            <tr>
+            <td><img src="' . $_SERVER["DOCUMENT_ROOT"] . '/brand/upstegal.png" alt="" width="100" height="100" class="d-inline-block align-text-top"></td>
+            <td align="center">YAYASAN PENDIDIKAN PANCASAKTI
+            UNIVERSITAS PANCASAKTI TEGAL <br>
+               <strong size="18">FAKULTAS EKONOMI DAN BISNIS</strong><br>
+               
+               MANAJEMEN, AKUNTANSI, MANAJEMEN PERPAJAKAN, DAN BISNIS DIGITAL <br>
+               Jl. Halmahera KM.1 Kota Tegal 52121 | Telp:(0283) 355720 | <br> Web:feb.upstegal.ac.id | Email:feb@upstegal.ac.id</td>
+            </tr>
+            </table>
+       
+        <hr>
+<center>
+    <strong>
+        SURAT KETERANGAN
+
+      
+    </strong>
+</center>
+<center>
+   No.
+</center>
+<p>Dekan Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal menerangkan dengan
+    sebenarnya bahwa :</p>
 
 
+<table>
+    <tr>
+        <td>Nama</td>
+        <td>:</td>
+        <td>' . $nama_user . '</td>
+    </tr>
+    <tr>
+        <td>NPM</td>
+        <td>:</td>
+        <td>' . $npm_user . '</td>
+    </tr>
+    <tr>
+        <td>Program Studi</td>
+        <td>:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Tempat, Tanggal Lahir</td>
+        <td>:</td>
+        <td>' . $profil['tempat_user'] . '</td>
+    </tr>
+    <tr>
+        <td>Alamat</td>
+        <td>:</td>
+        <td></td>
+    </tr>
+</table>
+<br>
+<p>Adalah benar yang bersangkutan terdaftar sebagai mahasiswa Program Studi
+    Manajemen Semester Genap Tahun Akademik 2021/2022.</p>
+<p>Mahasiswa tersebut di atas adalah anak dari orang tua :</p>
+<table>
+    <tr>
+        <td>Nama</td>
+        <td>:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Instansi</td>
+        <td>:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Pangkat/Golongan</td>
+        <td>:</td>
+        <td></td>
+    </tr>
+</table>';
 
-        $dompdf = new \Dompdf\Dompdf();
-        $dompdf->loadHtml(view('mahasiswa/' . $page, $data));
+
+        $Options = new Options();
+        $Options->set('chroot', realpath(''));
+        $dompdf = new Dompdf($Options);
+
+        // $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHtml($html1);
+
         $dompdf->setPaper('A4', 'potrait');
         $dompdf->render();
         $dompdf->stream();
+    }
+    public function formsurat($page = 'aktif-kuliah')
+    {
+
+        if (!is_file(APPPATH . 'Views/surat/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
+        $validasi =  \Config\Services::validation();
+
+        $jurusan =  $this->daftarModel->findAll();
+        $simpanModel = new SimpanModel();
+        $profil = $simpanModel->where('npm_user', $npm_user)->first();
+
+        $data = [
+            'title' => 'Surat keterangan Aktif Kuliah',
+            'jurusan' => $jurusan,
+            'validasi' => $validasi,
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'role' => $role,
+            'logged_in' => $logged_in,
+            'profil' => $profil
+        ];
+
+
+        echo view('templates/header', $data);
+        echo view('surat/' . $page, $data);
+        echo view('templates/footer', $data);
     }
 }

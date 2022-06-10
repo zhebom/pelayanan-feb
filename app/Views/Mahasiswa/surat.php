@@ -31,7 +31,7 @@
             <div class="card-body">
                 <h5 class="card-title">Layanan Aktif Kuliah</h5>
                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Buat Surat</a>
+                <a href="<?= site_url('aktif-kuliah'); ?>" class="btn btn-primary">Buat Surat</a>
             </div>
         </div>
     </div>
