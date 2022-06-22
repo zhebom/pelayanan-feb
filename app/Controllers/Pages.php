@@ -136,12 +136,30 @@ class Pages extends BaseController
             'ortu_user' => $this->request->getVar('ortu_user'),
             'kerja_user' => $this->request->getVar('kerja_user'),
             'semester_user' => $this->request->getVar('semester_user'),
-            'pangkat_user' => $this->request->getVar('pangkat_user')
+            'pangkat_user' => $this->request->getVar('pangkat_user'),
+            'skripsi_user' => $this->request->getVar('skripsi_user'),
+            'institusi_user' => $this->request->getVar('institusi_user'),
+            'alis_user' => $this->request->getVar('alis_user')
         ];
 
         $simpanModel->update($id_user, $data);
         session()->setFlashdata('msg', 'Data Berhasil Dirubah');
         return redirect()->to('/pages/profil')->withInput();
+    }
+    public function updateip($id_user)
+    {
+        $simpanModel = new SimpanModel();
+        $data = [
+            'nama_user' => $this->request->getVar('nama'),       
+            'jurusan_user' => $this->request->getVar('jurusan'),
+            'skripsi_user' => $this->request->getVar('skripsi'),
+            'institusi_user' => $this->request->getVar('institusi_user'),
+            'alis_user' => $this->request->getVar('alis_user')
+        ];
+        
+        $simpanModel->update($id_user, $data);
+        session()->setFlashdata('msg', 'Data Berhasil Dirubah');
+         return redirect()->to('/eip')->withInput();
     }
     public function login()
     {
@@ -432,6 +450,7 @@ class Pages extends BaseController
             'npm_aktifkuliah' => $npm_user,
             'nama_aktifkuliah' => $nama_user,
             'no_aktifkuliah' => $nomor,
+            'keterangan_aktifkuliah' => 'Surat Keterangan Aktif Kuliah',
             'created_at' => $today
 
         ]);
@@ -465,7 +484,7 @@ class Pages extends BaseController
     </strong>
 </center>
 <center>
-   No.' . $nomor . '
+   No:' . $nomor . '
 </center>
 <p>Dekan Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal menerangkan dengan
     sebenarnya bahwa :</p>
@@ -564,6 +583,262 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
         $dompdf->render();
         $dompdf->stream('Surat Aktif Kuliah_' . $npm_user . '.pdf');
     }
+
+    public function ijinpenelitian($page = 'ijin-penelitian')
+    {
+        // $id_user = session()->get('id_user');
+        // $npm_user = session()->get('npm_user');
+        // $nama_user = session()->get('nama_user');
+        // $role = session()->get('role');
+
+        // $logged_in = session()->get('logged_in');
+
+        // $data = [
+        //     'title' => 'Pengajuan Surat',
+        //     'id_user' => $id_user,
+        //     'npm_user' => $npm_user,
+        //     'nama_user' => $nama_user,
+        //     'role' => $role,
+
+
+        // ];
+
+        if (!is_file(APPPATH . 'Views/surat/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
+        $validasi =  \Config\Services::validation();
+
+        $jurusan =  $this->daftarModel->findAll();
+        $simpanModel = new SimpanModel();
+        $profil = $simpanModel->where('npm_user', $npm_user)->first();
+        $aktifModel = new AktifModel();
+        $getnosurat = $aktifModel->where('Month(created_at)', date('m'))->findAll();
+
+        $data = [
+            'title' => 'Surat keterangan Aktif Kuliah',
+            'jurusan' => $jurusan,
+            'validasi' => $validasi,
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'role' => $role,
+            'logged_in' => $logged_in,
+            'profil' => $profil,
+            'getnosurat' => $getnosurat
+        ];
+
+
+
+        date_default_timezone_set('UTC');
+
+        $day = explode("-", $profil['lahir_user']);
+        // $day =  $profil['lahir_user'];
+        $arday = array($day[2], $day[1], $day[0]);
+        $day1 = implode("-", $arday);
+        $jur = $profil['jurusan_user'];
+        switch ($jur) {
+            case 1:
+                $jur = "Manajemen";
+
+                break;
+            case 2:
+                $jur = "Akuntansi";
+
+                break;
+            case 3:
+                $jur = "Bisnis Digital";
+                break;
+            case 4:
+                $jur = "D3 - Manajemen Perpajakan";
+                break;
+            default:
+                $jur = "anda belum memilih jurusan";
+                break;
+        }
+
+        $bulan = array(
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember',
+        );
+        $romawi = array(
+            '01' => 'I',
+            '02' => 'II',
+            '03' => 'III',
+            '04' => 'IV',
+            '05' => 'V',
+            '06' => 'VI',
+            '07' => 'VII',
+            '08' => 'VIII',
+            '09' => 'IX',
+            '10' => 'X',
+            '11' => 'XI',
+            '12' => 'XII',
+        );
+        $surat = COUNT($getnosurat) + 1;
+        $romawi = $romawi[date('m')];
+        $tahun = date('Y');
+        $nomor = "$surat/K/I/FEB/UPS/$romawi/$tahun";
+        $today = date("Y-m-d H:i:s");
+        $aktifModel = new AktifModel();
+        $aktifModel->save([
+            'npm_aktifkuliah' => $npm_user,
+            'nama_aktifkuliah' => $nama_user,
+            'no_aktifkuliah' => $nomor,
+            'keterangan_aktifkuliah' => 'Surat Keterangan Aktif Kuliah',
+            'created_at' => $today
+
+        ]);
+        $bil = $profil['semester_user']; // Inisialisasi variabel bil dengan nilai 10
+
+        if ($bil % 2 == 0) { //Kondisi
+            $sms = "Genap"; //Kondisi true
+        } else {
+            $sms = "Gasal"; //Kondisi true
+        }
+        $html1 = '
+        
+            <table>
+            <tr>
+            <td><img src="' . $_SERVER["DOCUMENT_ROOT"] . '/brand/upstegal.png" alt="" width="100" height="100" class="d-inline-block align-text-top"></td>
+            <td align="center">YAYASAN PENDIDIKAN PANCASAKTI <br>
+            UNIVERSITAS PANCASAKTI TEGAL <br>
+               <strong size="18">FAKULTAS EKONOMI DAN BISNIS</strong><br>
+               
+               MANAJEMEN, AKUNTANSI, MANAJEMEN PERPAJAKAN, DAN BISNIS DIGITAL <br>
+               Jl. Halmahera KM.1 Kota Tegal 52121 | Telp:(0283) 355720 | <br> Web:feb.upstegal.ac.id | Email:feb@upstegal.ac.id</td>
+            </tr>
+            </table>
+       
+        <hr>
+<table>
+<tr>
+<td>Nomor</td>
+<td>: </td>
+<td width:"350">' . $nomor . '</td>
+<td>Tegal, ' .
+            date('d') . ' ' . $bulan[date('m')] . ' ' . date('Y')
+
+            . '</td>
+<td></td>
+</tr>
+<tr>
+<td>Lampiran</td>
+<td>:</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>Perihal</td>
+<td>:</td>
+<td><strong>Ijin Penelitian</strong></td>
+<td></td>
+</tr>
+
+
+<tr>
+<td>Kepada</td>
+<td>:</td>
+<td><strong>Yth.'. $profil['institusi_user'].' </strong></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>'.$profil['alis_user'].'</td>
+</tr>
+</table>
+<p>Dengan hormat, salah satu syarat untuk menyelesaikan program sarjana (S1)
+Fakultas Ekonomi dan Bisnis mahasiswa di wajibkan mengadakan penelitian
+sebagai bahan menyusun skripsi.
+Berkenaan dengan hal itu, mohon perkenaan Bapak membantu memberi data
+yang diperlukan dalam penelitian tersebut kepada mahasiswa : :</p>
+
+
+<table>
+    <tr>
+        <td>Nama</td>
+        <td>:</td>
+        <td>' . $nama_user . '</td>
+    </tr>
+    <tr>
+        <td>NPM</td>
+        <td>:</td>
+        <td>' . $npm_user . '</td>
+    </tr>
+    <tr>
+        <td>Program Studi</td>
+        <td>:</td>
+        <td>' . $jur . '</td>
+    </tr>
+ 
+    <tr>
+        <td>Judul Skripsi</td>
+        <td>:</td>
+        <td>' . $profil['skripsi_user'] . '</td>
+    </tr>
+</table>
+<br>
+
+<p>Atas bantuan dan kerja sama yang baik kami ucapkan terimakasih</p>
+<br>
+<br>
+<table >
+<tr>
+<td width="200"></td>
+<td>Tegal, ' .
+            date('d') . ' ' . $bulan[date('m')] . ' ' . date('Y')
+
+            . '</td>
+</tr>
+<tr>
+
+<td width="200"></td>
+<td align="top"> <strong>Dekan</strong></td>
+</tr>
+<tr>
+<td></td>
+<td height="75" ></td>
+</tr>
+<tr>
+<td width="200"></td>
+<td>Dr. Dien Noviany Rahmatika, SE., MM., Ak., CA</td>
+<tr>
+<td width="200"></td>
+<td>NIDN. 0628117502</td>
+</tr>
+</tr>
+</table>
+
+';
+
+        $html2 =  view('surat/' . $page, $data);
+        $Options = new Options();
+        $Options->set('chroot', realpath(''));
+        $dompdf = new Dompdf($Options);
+
+        // $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHtml($html1);
+
+        $dompdf->setPaper('A4', 'potrait');
+        $dompdf->render();
+        $dompdf->stream('Ijin Penelitian_' . $npm_user . '.pdf');
+    }
+
     public function formsurat($page = 'aktif-kuliah')
     {
 
@@ -597,6 +872,76 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
 
         echo view('templates/header', $data);
         echo view('surat/' . $page, $data);
+        echo view('templates/footer', $data);
+    }
+    public function formijinpenelitian($page = 'ijin-penelitian')
+    {
+
+        if (!is_file(APPPATH . 'Views/surat/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
+        $validasi =  \Config\Services::validation();
+
+        $jurusan =  $this->daftarModel->findAll();
+        $simpanModel = new SimpanModel();
+        $profil = $simpanModel->where('npm_user', $npm_user)->first();
+
+        $data = [
+            'title' => 'Surat keterangan Ijin Penelitian',
+            'jurusan' => $jurusan,
+            'validasi' => $validasi,
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'role' => $role,
+            'logged_in' => $logged_in,
+            'profil' => $profil
+        ];
+
+
+        echo view('templates/header', $data);
+        echo view('surat/' . $page, $data);
+        echo view('templates/footer', $data);
+    }
+    public function editijinpenelitian($page = 'ijin-penelitian')
+    {
+
+        if (!is_file(APPPATH . 'Views/surat/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+        }
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $logged_in = session()->get('logged_in');
+        $validasi =  \Config\Services::validation();
+
+        $jurusan =  $this->daftarModel->findAll();
+        $simpanModel = new SimpanModel();
+        $profil = $simpanModel->where('npm_user', $npm_user)->first();
+
+        $data = [
+            'title' => 'Surat keterangan Ijin Penelitian',
+            'jurusan' => $jurusan,
+            'validasi' => $validasi,
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'role' => $role,
+            'logged_in' => $logged_in,
+            'profil' => $profil
+        ];
+
+
+        echo view('templates/header', $data);
+        echo view('mahasiswa/' . $page, $data);
         echo view('templates/footer', $data);
     }
 }

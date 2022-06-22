@@ -53,35 +53,27 @@
         <tr>
             <td>Judul Skripsi</td>
             <td>:</td>
-            <td><?= $profil['alamat_user']; ?></td>
+            <td><?= $profil['skripsi_user']; ?></td>
         </tr>
-
+        <tr>
+            <td>Institusi</td>
+            <td>:</td>
+            <td><?= $profil['institusi_user']; ?></td>
+        </tr>
+        <tr>
+            <td>Alamat Institusi</td>
+            <td>:</td>
+            <td><?= $profil['alis_user']; ?></td>
+        </tr>
 
     </table>
     <br>
 
     <p>Atas bantuan dan kerja sama yang baik kami ucapkan terima kasih,</p>
-    <table>
-        <tr>
-            <td>Nama</td>
-            <td>:</td>
-            <td><?= $profil['ortu_user']; ?></td>
-        </tr>
-        <tr>
-            <td>Instansi</td>
-            <td>:</td>
-            <td><?= $profil['kerja_user']; ?></td>
-        </tr>
-        <tr>
-            <td>Pangkat/Golongan</td>
-            <td>:</td>
-            <td><?= $profil['pangkat_user']; ?></td>
-        </tr>
-    </table>
-
-    <a class="btn btn-success" href="<?= base_url('profil'); ?>">
+  
+    <a class="btn btn-success" href="<?= base_url('eip'); ?>">
         Ubah Data
     </a>
-    <a class="btn btn-danger" href="<?= base_url('pages/aktifkuliah/'); ?>">
+    <a class="btn btn-danger" href="<?= base_url('cip'); ?>">
         Cetak Surat
     </a>
