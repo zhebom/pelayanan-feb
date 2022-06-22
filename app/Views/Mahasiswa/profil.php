@@ -1,6 +1,8 @@
 <body>
     <div class="container">
-
+        <?php if (session()->getFlashdata('msg')) : ?>
+            <div class="alert alert-success"><?= session()->getFlashdata('msg') ?></div>
+        <?php endif; ?>
 
         <form action='<?= base_url("pages/update/" . $id_user); ?>' method="post">
             <div class="row mb-3">
@@ -95,10 +97,56 @@
                 </div>
 
             </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Semester</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control <?= ($validasi->hasError('semester_user') ? 'is-invalid' : ''); ?>" id="semester_user" name="semester_user" value="<?= $profil['semester_user']; ?>">
+                    <?php if (!empty($validasi->getError('semester_user'))) { ?>
+                        <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('semester_user');
+                                                                            } ?>
+                        </button>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Nama Ortu</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control <?= ($validasi->hasError('ortu_user') ? 'is-invalid' : ''); ?>" id="ortu_user" name="ortu_user" value="<?= $profil['ortu_user']; ?>">
+                    <?php if (!empty($validasi->getError('ortu_user'))) { ?>
+                        <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('ortu_user');
+                                                                            } ?>
+                        </button>
+                </div>
 
-            <button type="submit" class="btn btn-primary">Update Profil</button>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Pekerjaan Ortu</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control <?= ($validasi->hasError('kerja_user') ? 'is-invalid' : ''); ?>" id="kerja_user" name="kerja_user" value="<?= $profil['kerja_user']; ?>">
+                    <?php if (!empty($validasi->getError('kerja_user'))) { ?>
+                        <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('kerja_user');
+                                                                            } ?>
+                        </button>
+                </div>
 
-        </form>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Golongan / Pangkat Orang Tua</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control <?= ($validasi->hasError('pangkat_user') ? 'is-invalid' : ''); ?>" id="pangkat_user" name="pangkat_user" value="<?= $profil['pangkat_user']; ?>">
+                    <?php if (!empty($validasi->getError('pangkat_user'))) { ?>
+                        <button class=" btn btn-danger btn-sm mt-2" disabled><?= $validasi->getError('pangkat_user');
+                                                                            } ?>
+                        </button>
+                        <a class=" btn btn-success btn-sm mt-2">Contoh : Penata Muda / IV A</a>
+                </div>
+
+            </div>
+
+
+    </div>
+    <button type="submit" class="btn btn-primary">Update Profil</button>
+
+    </form>
 
     </div>
     </div>

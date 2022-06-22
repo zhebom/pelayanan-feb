@@ -31,16 +31,16 @@
             <div class="card-body">
                 <h5 class="card-title">Layanan Aktif Kuliah</h5>
                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="<?= site_url('aktif-kuliah'); ?>" class="btn btn-primary">Buat Surat</a>
+                <a href="<?= base_url('aktif-kuliah'); ?>" class="btn btn-primary">Buat Surat</a>
             </div>
         </div>
     </div>
     <div class="col-sm-6 mt-3">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Layanan Penelitian & Magang</h5>
+                <h5 class="card-title">Layanan Ijin Penelitian</h5>
                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Buat Surat</a>
+                <a href="<?= base_url('ijin_penelitian/page=ijin-penelitian'); ?>" class="btn btn-primary">Buat Surat</a>
             </div>
         </div>
     </div>

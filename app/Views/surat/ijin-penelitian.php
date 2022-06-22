@@ -1,8 +1,11 @@
 <div class="text-left">
 
     <hr>
-    <p>Dekan Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal menerangkan dengan
-        sebenarnya bahwa :</p>
+    <p>Dengan hormat, salah satu syarat untuk menyelesaikan program sarjana (S1)
+        Fakultas Ekonomi dan Bisnis mahasiswa di wajibkan mengadakan penelitian
+        sebagai bahan menyusun skripsi.
+        Berkenaan dengan hal itu, mohon perkenaan Bapak membantu memberi data
+        yang diperlukan dalam penelitian tersebut kepada mahasiswa :</p>
 
 
     <table>
@@ -46,32 +49,18 @@
                 }
                 ?></td>
         </tr>
+
         <tr>
-            <td>Tempat, Tanggal Lahir</td>
-            <td>:</td>
-            <td><?= $profil['tempat_user']; ?>, <?php $day = explode("-", $profil['lahir_user']);
-                                                echo $day[2];
-                                                echo "-";
-                                                echo $day[1];
-                                                echo "-";
-                                                echo $day[0];
-                                                ?></td>
-        </tr>
-        <tr>
-            <td>Alamat</td>
+            <td>Judul Skripsi</td>
             <td>:</td>
             <td><?= $profil['alamat_user']; ?></td>
         </tr>
-        <tr>
-            <td>Semester</td>
-            <td>:</td>
-            <td><?= $profil['semester_user']; ?></td>
-        </tr>
+
 
     </table>
     <br>
 
-    <p>Mahasiswa tersebut di atas adalah anak dari orang tua :</p>
+    <p>Atas bantuan dan kerja sama yang baik kami ucapkan terima kasih,</p>
     <table>
         <tr>
             <td>Nama</td>

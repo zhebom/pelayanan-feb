@@ -1,4 +1,3 @@
-<?= $npm_user; ?>
 <?php if ($role < 3) {; ?>
     <table class="table">
         <thead>

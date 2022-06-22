@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\DaftarModel;
 use App\Models\SimpanModel;
+use App\Models\AktifModel;
 use Config\View;
 use DateTime;
 use Dompdf\Dompdf;
@@ -131,12 +132,16 @@ class Pages extends BaseController
             'jurusan_user' => $this->request->getVar('jurusan'),
             'alamat_user' => $this->request->getVar('alamat'),
             'tempat_user' => $this->request->getVar('tempatlahir'),
-            'lahir_user' => $this->request->getVar('tanggallahir')
+            'lahir_user' => $this->request->getVar('tanggallahir'),
+            'ortu_user' => $this->request->getVar('ortu_user'),
+            'kerja_user' => $this->request->getVar('kerja_user'),
+            'semester_user' => $this->request->getVar('semester_user'),
+            'pangkat_user' => $this->request->getVar('pangkat_user')
         ];
 
         $simpanModel->update($id_user, $data);
-
-        return redirect()->to('/pages/profil')->withInput()->with('i', $data);
+        session()->setFlashdata('msg', 'Data Berhasil Dirubah');
+        return redirect()->to('/pages/profil')->withInput();
     }
     public function login()
     {
@@ -294,8 +299,8 @@ class Pages extends BaseController
         $npm_user = session()->get('npm_user');
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
-        $profil = $simpanModel->where('npm_user', $npm_user)->first();
-        $logged_in = session()->get('logged_in');
+        $aktifModel = new AktifModel();
+        $aktifkuliah = $aktifModel->selectCount('id_aktifkuliah');
 
         $data = [
             'title' => 'Pengajuan Surat',
@@ -303,7 +308,8 @@ class Pages extends BaseController
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
             'role' => $role,
-            'profil' => $profil
+            'aktifkuliah' => $aktifkuliah
+
 
         ];
         echo view('templates/header', $data);
@@ -343,6 +349,8 @@ class Pages extends BaseController
         $jurusan =  $this->daftarModel->findAll();
         $simpanModel = new SimpanModel();
         $profil = $simpanModel->where('npm_user', $npm_user)->first();
+        $aktifModel = new AktifModel();
+        $getnosurat = $aktifModel->where('Month(created_at)', date('m'))->findAll();
 
         $data = [
             'title' => 'Surat keterangan Aktif Kuliah',
@@ -353,10 +361,13 @@ class Pages extends BaseController
             'nama_user' => $nama_user,
             'role' => $role,
             'logged_in' => $logged_in,
-            'profil' => $profil
+            'profil' => $profil,
+            'getnosurat' => $getnosurat
         ];
 
 
+
+        date_default_timezone_set('UTC');
 
         $day = explode("-", $profil['lahir_user']);
         // $day =  $profil['lahir_user'];
@@ -382,12 +393,61 @@ class Pages extends BaseController
                 $jur = "anda belum memilih jurusan";
                 break;
         }
+
+        $bulan = array(
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember',
+        );
+        $romawi = array(
+            '01' => 'I',
+            '02' => 'II',
+            '03' => 'III',
+            '04' => 'IV',
+            '05' => 'V',
+            '06' => 'VI',
+            '07' => 'VII',
+            '08' => 'VIII',
+            '09' => 'IX',
+            '10' => 'X',
+            '11' => 'XI',
+            '12' => 'XII',
+        );
+        $surat = COUNT($getnosurat) + 1;
+        $romawi = $romawi[date('m')];
+        $tahun = date('Y');
+        $nomor = "$surat/K/I/FEB/UPS/$romawi/$tahun";
+        $today = date("Y-m-d H:i:s");
+        $aktifModel = new AktifModel();
+        $aktifModel->save([
+            'npm_aktifkuliah' => $npm_user,
+            'nama_aktifkuliah' => $nama_user,
+            'no_aktifkuliah' => $nomor,
+            'created_at' => $today
+
+        ]);
+        $bil = $profil['semester_user']; // Inisialisasi variabel bil dengan nilai 10
+
+        if ($bil % 2 == 0) { //Kondisi
+            $sms = "Genap"; //Kondisi true
+        } else {
+            $sms = "Gasal"; //Kondisi true
+        }
         $html1 = '
         
             <table>
             <tr>
             <td><img src="' . $_SERVER["DOCUMENT_ROOT"] . '/brand/upstegal.png" alt="" width="100" height="100" class="d-inline-block align-text-top"></td>
-            <td align="center">YAYASAN PENDIDIKAN PANCASAKTI
+            <td align="center">YAYASAN PENDIDIKAN PANCASAKTI <br>
             UNIVERSITAS PANCASAKTI TEGAL <br>
                <strong size="18">FAKULTAS EKONOMI DAN BISNIS</strong><br>
                
@@ -405,7 +465,7 @@ class Pages extends BaseController
     </strong>
 </center>
 <center>
-   No.
+   No.' . $nomor . '
 </center>
 <p>Dekan Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal menerangkan dengan
     sebenarnya bahwa :</p>
@@ -435,30 +495,62 @@ class Pages extends BaseController
     <tr>
         <td>Alamat</td>
         <td>:</td>
-        <td></td>
+        <td>' . $profil['alamat_user'] . '</td>
     </tr>
 </table>
 <br>
 <p>Adalah benar yang bersangkutan terdaftar sebagai mahasiswa Program Studi
-    Manajemen Semester Genap Tahun Akademik 2021/2022.</p>
+    ' . $jur . ' Semester ' . $sms . ' Tahun Akademik 2021/2022.</p>
 <p>Mahasiswa tersebut di atas adalah anak dari orang tua :</p>
 <table>
     <tr>
         <td>Nama</td>
         <td>:</td>
-        <td></td>
+        <td>' . $profil['ortu_user'] . '</td>
     </tr>
     <tr>
         <td>Instansi</td>
         <td>:</td>
-        <td></td>
+        <td>' . $profil['kerja_user'] . '</td>
     </tr>
     <tr>
         <td>Pangkat/Golongan</td>
         <td>:</td>
-        <td></td>
+        <td>' . $profil['pangkat_user'] . '</td>
     </tr>
-</table>';
+</table>
+<br>
+Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunakan seperlunya.
+<br>
+<br>
+<table >
+<tr>
+<td width="200"></td>
+<td>Tegal, ' .
+            date('d') . ' ' . $bulan[date('m')] . ' ' . date('Y')
+
+            . '</td>
+</tr>
+<tr>
+
+<td width="200"></td>
+<td align="top"> <strong>Dekan</strong></td>
+</tr>
+<tr>
+<td></td>
+<td height="75" ></td>
+</tr>
+<tr>
+<td width="200"></td>
+<td>Dr. Dien Noviany Rahmatika, SE., MM., Ak., CA</td>
+<tr>
+<td width="200"></td>
+<td>NIDN. 0628117502</td>
+</tr>
+</tr>
+</table>
+
+';
 
         $html2 =  view('surat/' . $page, $data);
         $Options = new Options();
@@ -470,7 +562,7 @@ class Pages extends BaseController
 
         $dompdf->setPaper('A4', 'potrait');
         $dompdf->render();
-        $dompdf->stream();
+        $dompdf->stream('Surat Aktif Kuliah_' . $npm_user . '.pdf');
     }
     public function formsurat($page = 'aktif-kuliah')
     {
