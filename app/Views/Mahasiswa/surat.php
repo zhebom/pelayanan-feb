@@ -29,8 +29,8 @@
     <div class="col-sm-6 mt-3">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Layanan Aktif Kuliah</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <h5 class="card-title">Surat Keterangan Aktif Kuliah</h5>
+                <p class="card-text">Surat keterangan aktif kuliah yang menyatakan tentang keaktifan kuliah Mahasiswa yang disertai identitas orang tua</p>
                 <a href="<?= base_url('aktif-kuliah'); ?>" class="btn btn-primary">Buat Surat</a>
             </div>
         </div>
@@ -38,8 +38,8 @@
     <div class="col-sm-6 mt-3">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Layanan Ijin Penelitian</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <h5 class="card-title">Surat Ijin Penelitian</h5>
+                <p class="card-text">Surat ijin yang ditujukan ke instansi tempat pengumpulan data penelitian sebagai ijin untuk meminta data / melakukan penelitian</p>
                 <a href="<?= base_url('ip'); ?>" class="btn btn-primary">Buat Surat</a>
             </div>
         </div>

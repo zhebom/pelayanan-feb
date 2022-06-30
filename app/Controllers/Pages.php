@@ -144,7 +144,7 @@ class Pages extends BaseController
 
         $simpanModel->update($id_user, $data);
         session()->setFlashdata('msg', 'Data Berhasil Dirubah');
-        return redirect()->to('/pages/profil')->withInput();
+        return redirect()->to('/aktif-kuliah')->withInput();
     }
     public function updateip($id_user)
     {
@@ -159,7 +159,7 @@ class Pages extends BaseController
         
         $simpanModel->update($id_user, $data);
         session()->setFlashdata('msg', 'Data Berhasil Dirubah');
-         return redirect()->to('/eip')->withInput();
+         return redirect()->to('/ip')->withInput();
     }
     public function login()
     {
@@ -216,7 +216,7 @@ class Pages extends BaseController
 
                 $session->set($data);
 
-                return redirect()->to(base_url('mahasiswa'));
+                return redirect()->to(base_url('surat'));
                 //echo "password anda berhasil";
             } else {
                 //echo "password anda salah";
@@ -693,14 +693,14 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
         $surat = COUNT($getnosurat) + 1;
         $romawi = $romawi[date('m')];
         $tahun = date('Y');
-        $nomor = "$surat/K/I/FEB/UPS/$romawi/$tahun";
+        $nomor = "$surat/K/E/FEB/UPS/$romawi/$tahun";
         $today = date("Y-m-d H:i:s");
         $aktifModel = new AktifModel();
         $aktifModel->save([
             'npm_aktifkuliah' => $npm_user,
             'nama_aktifkuliah' => $nama_user,
             'no_aktifkuliah' => $nomor,
-            'keterangan_aktifkuliah' => 'Surat Keterangan Aktif Kuliah',
+            'keterangan_aktifkuliah' => 'Surat Ijin Penelitian',
             'created_at' => $today
 
         ]);
@@ -749,8 +749,6 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
 <td><strong>Ijin Penelitian</strong></td>
 <td></td>
 </tr>
-
-
 <tr>
 <td>Kepada</td>
 <td>:</td>

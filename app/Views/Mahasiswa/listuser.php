@@ -1,4 +1,8 @@
+<?php if (session()->getFlashdata('msg')) : ?>
+            <div class="alert alert-success"><?= session()->getFlashdata('msg') ?></div>
+        <?php endif; ?>
 <?php if ($role < 3) {; ?>
+    
     <table class="table">
         <thead>
             <tr>
@@ -58,8 +62,8 @@
 
                         <td>
 
-                            <button class="btn btn-success" href="#">Detail</button>
-                            <button class="btn btn-warning" href="#">Reset</button>
+                            <a class="btn btn-success" href="#">Riwayat</a>
+                            <a class="btn btn-warning" href="<?= base_url('mahasiswa/reset/'.$m['id_user']); ?>">Reset</a>
 
 
                         </td>

@@ -38,6 +38,7 @@ $routes->addRedirect('pages/profil', 'profil');
 $routes->addRedirect('pages/listuser', 'mahasiswa');
 $routes->addRedirect('pages/surat', 'surat');
 $routes->addRedirect('pages/formsurat', 'aktif-kuliah');
+
 $routes->get('/daftar', 'Pages::home');
 $routes->get('/aktif-kuliah', 'Pages::formsurat', ['filter' => 'auth']);
 $routes->get('/surat', 'Pages::surat', ['filter' => 'auth']);
