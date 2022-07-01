@@ -15,6 +15,6 @@ class Mahasiswa extends BaseController
         ];
         $simpanModel->update($user, $data);
         session()->setFlashdata('msg', 'Password Berhasil Dirubah');
-        return redirect()->to('/mahasiswa')->withInput(); 
+        return redirect()->to('mahasiswa')->withInput(); 
     }
 }

@@ -271,9 +271,9 @@ class Pages extends BaseController
         ];
 
 
-        echo view('templates/header', $data);
+        echo view('templates/head', $data);
         echo view('mahasiswa/' . $page, $data);
-        echo view('templates/footer', $data);
+        echo view('templates/foot', $data);
     }
     public function profil($page = 'profil')
     {
