@@ -42,24 +42,25 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
+         
+            <?php foreach($menu as $menu):?>
             <li class="nav-item active">
-                <a class="nav-link" href="<?= base_url('dashboard'); ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                <a class="nav-link" href="<?= $menu['href_menu']; ?>">
+                    <i class="<?= $menu['class_menu']; ?>"></i>
+                    <span><?= $menu['title_menu']; ?></span></a>
             </li>
-
+                <?php endforeach;  ?>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <li class="nav-item active">
-                <a class="nav-link" href="<?= base_url('dashboard'); ?>">
+            <!-- <li class="nav-item active">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Data Mahasiswa</span></a>
-            </li>
+            </li> -->
 
           
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+          
 
           
 

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\DaftarModel;
 use App\Models\SimpanModel;
 use App\Models\AktifModel;
+use App\Models\MenuModel;
 use Config\View;
 use DateTime;
 use Dompdf\Dompdf;
@@ -18,6 +19,7 @@ class Pages extends BaseController
     public function __construct()
     {
         $this->daftarModel = new DaftarModel();
+        
     }
 
     public function index()
@@ -27,7 +29,7 @@ class Pages extends BaseController
         $data = [
             'title' => 'Halaman Login',
             'validasi' => $validasi
-        ];     //  view('templates/header', $data);
+        ];     //  view('templates/head', $data);
         echo view('pages/login', $data);
     }
 
@@ -42,17 +44,20 @@ class Pages extends BaseController
         $validasi =  \Config\Services::validation();
 
         $jurusan =  $this->daftarModel->findAll();
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
 
         $data = [
             'title' => 'Form Pendaftaran Akun Pelayanan Surat',
             'jurusan' => $jurusan,
-            'validasi' => $validasi
+            'validasi' => $validasi,
+            'menu' => $menu
         ];
 
 
-        // echo view('templates/header', $data);
+        // echo view('templates/head', $data);
         echo view('pages/' . $page, $data);
-        // echo view('templates/footer', $data);
+        // echo view('templates/foot', $data);
     }
 
     public function simpan()
@@ -251,6 +256,8 @@ class Pages extends BaseController
         $validasi =  \Config\Services::validation();
         $simpanModel = new SimpanModel();
         $jurusan =  $simpanModel->where('role', 3)->findAll();
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
         // $daftar = $this->daftarModel->where(
         //     'id_jurusan',
         //     $key
@@ -264,6 +271,7 @@ class Pages extends BaseController
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
             'role' => $role,
+            'menu' => $menu,
             'logged_in' => $logged_in
 
 
@@ -292,7 +300,8 @@ class Pages extends BaseController
         $jurusan =  $this->daftarModel->findAll();
         $simpanModel = new SimpanModel();
         $profil = $simpanModel->where('npm_user', $npm_user)->first();
-
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
         $data = [
             'title' => 'Profil Mahasiswa',
             'jurusan' => $jurusan,
@@ -302,13 +311,14 @@ class Pages extends BaseController
             'nama_user' => $nama_user,
             'role' => $role,
             'logged_in' => $logged_in,
+            'menu' => $menu,
             'profil' => $profil
         ];
 
 
-        echo view('templates/header', $data);
+        echo view('templates/head', $data);
         echo view('mahasiswa/' . $page, $data);
-        echo view('templates/footer', $data);
+        echo view('templates/foot', $data);
     }
 
     public function surat($page = 'surat')
@@ -319,6 +329,8 @@ class Pages extends BaseController
         $role = session()->get('role');
         $aktifModel = new AktifModel();
         $aktifkuliah = $aktifModel->selectCount('id_aktifkuliah');
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
 
         $data = [
             'title' => 'Pengajuan Surat',
@@ -326,13 +338,14 @@ class Pages extends BaseController
             'npm_user' => $npm_user,
             'nama_user' => $nama_user,
             'role' => $role,
+            'menu' => $menu,
             'aktifkuliah' => $aktifkuliah
 
 
         ];
-        echo view('templates/header', $data);
+        echo view('templates/head', $data);
         echo view('mahasiswa/' . $page, $data);
-        echo view('templates/footer', $data);
+        echo view('templates/foot', $data);
     }
     public function aktifkuliah($page = 'aktif-kuliah')
     {
@@ -369,7 +382,8 @@ class Pages extends BaseController
         $profil = $simpanModel->where('npm_user', $npm_user)->first();
         $aktifModel = new AktifModel();
         $getnosurat = $aktifModel->where('Month(created_at)', date('m'))->findAll();
-
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
         $data = [
             'title' => 'Surat keterangan Aktif Kuliah',
             'jurusan' => $jurusan,
@@ -380,7 +394,8 @@ class Pages extends BaseController
             'role' => $role,
             'logged_in' => $logged_in,
             'profil' => $profil,
-            'getnosurat' => $getnosurat
+            'getnosurat' => $getnosurat,
+            'menu' => $menu
         ];
 
 
@@ -619,7 +634,8 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
         $profil = $simpanModel->where('npm_user', $npm_user)->first();
         $aktifModel = new AktifModel();
         $getnosurat = $aktifModel->where('Month(created_at)', date('m'))->findAll();
-
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
         $data = [
             'title' => 'Surat keterangan Aktif Kuliah',
             'jurusan' => $jurusan,
@@ -630,7 +646,8 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
             'role' => $role,
             'logged_in' => $logged_in,
             'profil' => $profil,
-            'getnosurat' => $getnosurat
+            'getnosurat' => $getnosurat,
+            'menu' => $menu
         ];
 
 
@@ -854,7 +871,8 @@ yang diperlukan dalam penelitian tersebut kepada mahasiswa : :</p>
         $jurusan =  $this->daftarModel->findAll();
         $simpanModel = new SimpanModel();
         $profil = $simpanModel->where('npm_user', $npm_user)->first();
-
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
         $data = [
             'title' => 'Surat keterangan Aktif Kuliah',
             'jurusan' => $jurusan,
@@ -864,13 +882,14 @@ yang diperlukan dalam penelitian tersebut kepada mahasiswa : :</p>
             'nama_user' => $nama_user,
             'role' => $role,
             'logged_in' => $logged_in,
-            'profil' => $profil
+            'profil' => $profil,
+            'menu' => $menu
         ];
 
 
-        echo view('templates/header', $data);
+        echo view('templates/head', $data);
         echo view('surat/' . $page, $data);
-        echo view('templates/footer', $data);
+        echo view('templates/foot', $data);
     }
     public function formijinpenelitian($page = 'ijin-penelitian')
     {
@@ -889,7 +908,8 @@ yang diperlukan dalam penelitian tersebut kepada mahasiswa : :</p>
         $jurusan =  $this->daftarModel->findAll();
         $simpanModel = new SimpanModel();
         $profil = $simpanModel->where('npm_user', $npm_user)->first();
-
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
         $data = [
             'title' => 'Surat keterangan Ijin Penelitian',
             'jurusan' => $jurusan,
@@ -899,13 +919,14 @@ yang diperlukan dalam penelitian tersebut kepada mahasiswa : :</p>
             'nama_user' => $nama_user,
             'role' => $role,
             'logged_in' => $logged_in,
-            'profil' => $profil
+            'profil' => $profil,
+            'menu' => $menu
         ];
 
 
-        echo view('templates/header', $data);
+        echo view('templates/head', $data);
         echo view('surat/' . $page, $data);
-        echo view('templates/footer', $data);
+        echo view('templates/foot', $data);
     }
     public function editijinpenelitian($page = 'ijin-penelitian')
     {
@@ -924,7 +945,8 @@ yang diperlukan dalam penelitian tersebut kepada mahasiswa : :</p>
         $jurusan =  $this->daftarModel->findAll();
         $simpanModel = new SimpanModel();
         $profil = $simpanModel->where('npm_user', $npm_user)->first();
-
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
         $data = [
             'title' => 'Surat keterangan Ijin Penelitian',
             'jurusan' => $jurusan,
@@ -934,12 +956,13 @@ yang diperlukan dalam penelitian tersebut kepada mahasiswa : :</p>
             'nama_user' => $nama_user,
             'role' => $role,
             'logged_in' => $logged_in,
-            'profil' => $profil
+            'profil' => $profil,
+            'menu' => $menu
         ];
 
 
-        echo view('templates/header', $data);
+        echo view('templates/head', $data);
         echo view('mahasiswa/' . $page, $data);
-        echo view('templates/footer', $data);
+        echo view('templates/foot', $data);
     }
 }

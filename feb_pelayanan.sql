@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2022 at 10:33 AM
+-- Generation Time: Jul 01, 2022 at 12:56 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -53,7 +53,13 @@ INSERT INTO `feb_aktifkuliah` (`id_aktifkuliah`, `npm_aktifkuliah`, `nama_aktifk
 (9, 29452231993, 'Widhiawan Agung K', '9/K/I/FEB/UPS/VI/2022', 'Surat Keterangan Aktif Kuliah', '2022-06-22 08:11:47', '2022-06-22 08:11:47'),
 (10, 29452231993, 'Widhiawan Agung K', '10/K/I/FEB/UPS/VI/2022', 'Surat Keterangan Aktif Kuliah', '2022-06-22 08:13:07', '2022-06-22 08:13:07'),
 (11, 29452231993, 'Widhiawan Agung K', '11/K/I/FEB/UPS/VI/2022', 'Surat Keterangan Aktif Kuliah', '2022-06-22 08:13:47', '2022-06-22 08:13:47'),
-(12, 29452231993, 'Widhiawan Agung K', '12/K/I/FEB/UPS/VI/2022', 'Surat Keterangan Aktif Kuliah', '2022-06-22 08:14:18', '2022-06-22 08:14:18');
+(12, 29452231993, 'Widhiawan Agung K', '12/K/I/FEB/UPS/VI/2022', 'Surat Keterangan Aktif Kuliah', '2022-06-22 08:14:18', '2022-06-22 08:14:18'),
+(13, 29452231993, 'Widhiawan Agung K', '13/K/I/FEB/UPS/VI/2022', 'Surat Keterangan Aktif Kuliah', '2022-06-22 09:36:29', '2022-06-22 09:36:29'),
+(14, 29452231993, 'Widhiawan Agung K', '14/K/I/FEB/UPS/VI/2022', 'Surat Keterangan Aktif Kuliah', '2022-06-22 09:40:03', '2022-06-22 09:40:03'),
+(15, 29452231993, 'Widhiawan Agung K', '15/K/E/FEB/UPS/VI/2022', 'Surat Ijin Penelitian', '2022-06-22 09:40:30', '2022-06-22 09:40:30'),
+(16, 1234567890, 'Fakultas Ekonomi dan Bisnis', '16/K/E/FEB/UPS/VI/2022', 'Surat Ijin Penelitian', '2022-06-22 10:26:35', '2022-06-22 10:26:35'),
+(17, 29452231993, 'Widhiawan Agung K', '17/K/E/FEB/UPS/VI/2022', 'Surat Ijin Penelitian', '2022-06-30 02:32:22', '2022-06-30 02:32:22'),
+(18, 29452231993, 'Widhiawan Agung K', '18/K/I/FEB/UPS/VI/2022', 'Surat Keterangan Aktif Kuliah', '2022-06-30 02:37:49', '2022-06-30 02:37:49');
 
 -- --------------------------------------------------------
 
@@ -111,7 +117,31 @@ CREATE TABLE `feb_user` (
 --
 
 INSERT INTO `feb_user` (`id_user`, `npm_user`, `email_user`, `nama_user`, `jurusan_user`, `alamat_user`, `tempat_user`, `lahir_user`, `ortu_user`, `kerja_user`, `semester_user`, `pangkat_user`, `skripsi_user`, `institusi_user`, `alis_user`, `pass_user`, `role`, `created_at`, `updated_at`) VALUES
-(1, 29452231993, 'zhebom@gmail.com', 'Widhiawan Agung K', 3, 'Jl. Nanas No. 7 RT.5 RW.2 Kelurahan Procot Kecamatan Slawi', 'Tegal', '1993-03-22', 'Ali Sasmito', 'PNS', 5, 'Penata Muda / IV A', 'pengaruh antara perbandingan dan penambahan (Studi kasus:Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal)', 'Fakultas Ekonomi dan Bisnis', 'Jl. Halmahera 1, RT.5 RW.2 Kecamatan tegal timur', '$2y$10$5TKy0pBCmWlC8/SoLc5YR.YRV/zyUtXOlIKNy.ntM2QwH45N.ct0y', 1, '2022-06-22 00:29:19', '2022-06-22 03:12:54');
+(1, 29452231993, 'zhebom@gmail.com', 'Widhiawan Agung K', 3, 'Jl. Nanas No. 7 RT.5 RW.2 Kelurahan Procot Kecamatan Slawi', 'Tegal', '1993-03-22', 'Ali Sasmito', 'PNS', 3, 'Penata Muda / IV A', 'pengaruh antara perbandingan dan penambahan (Studi kasus:Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal)', 'Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal', 'Jl. Halmahera 1, RT.5 RW.2 Kecamatan tegal timur', '$2y$10$5TKy0pBCmWlC8/SoLc5YR.YRV/zyUtXOlIKNy.ntM2QwH45N.ct0y', 1, '2022-06-22 00:29:19', '2022-06-29 21:32:19'),
+(2, 1234567890, 'zhebom@gmail.com', 'Fakultas Ekonomi dan Bisnis', 1, 'Jl. Nanas No. 7 RT.5 RW.2 Kelurahan Procot Kecamatan Slawi', 'Tegal', '2022-05-31', '', '', 0, '', 'pengaruh antara perbandingan dan penambahan (Studi kasus:Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal)', 'Fakultas Ekonomi dan Bisnis', 'Jl. Halmahera 1, RT.5 RW.2 Kecamatan tegal timur', '$2y$10$FyP6EeRN/2WyWZghV2bueOL.mXZRFJIrYt6JFW5jPhW86Uw7W8T3a', 3, '2022-06-22 05:26:08', '2022-06-29 21:35:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_user`
+--
+
+CREATE TABLE `menu_user` (
+  `id_menu` int(11) NOT NULL,
+  `role_menu` int(11) NOT NULL,
+  `href_menu` varchar(255) NOT NULL,
+  `class_menu` varchar(255) NOT NULL,
+  `title_menu` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `menu_user`
+--
+
+INSERT INTO `menu_user` (`id_menu`, `role_menu`, `href_menu`, `class_menu`, `title_menu`) VALUES
+(1, 1, 'mahasiswa', 'fas fa-fw fa-solid fa-user', 'Data Mahasiswa'),
+(2, 1, '/surat', 'fas fa-fw fa-solid fa-user', 'Pelayanan Surat'),
+(3, 3, '/surat', 'fas fa-fw fa-solid fa-user', 'Pelayanan Surat');
 
 --
 -- Indexes for dumped tables
@@ -136,6 +166,12 @@ ALTER TABLE `feb_user`
   ADD PRIMARY KEY (`id_user`);
 
 --
+-- Indexes for table `menu_user`
+--
+ALTER TABLE `menu_user`
+  ADD PRIMARY KEY (`id_menu`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -143,7 +179,7 @@ ALTER TABLE `feb_user`
 -- AUTO_INCREMENT for table `feb_aktifkuliah`
 --
 ALTER TABLE `feb_aktifkuliah`
-  MODIFY `id_aktifkuliah` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_aktifkuliah` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `feb_jurusan`
@@ -155,7 +191,13 @@ ALTER TABLE `feb_jurusan`
 -- AUTO_INCREMENT for table `feb_user`
 --
 ALTER TABLE `feb_user`
-  MODIFY `id_user` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `menu_user`
+--
+ALTER TABLE `menu_user`
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
