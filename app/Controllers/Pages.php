@@ -24,13 +24,18 @@ class Pages extends BaseController
 
     public function index()
     {
-
+        if (!session()) 
+        {    
         $validasi =  \Config\Services::validation();
         $data = [
             'title' => 'Halaman Login',
             'validasi' => $validasi
         ];     //  view('templates/head', $data);
         echo view('pages/login', $data);
+        } else
+        {
+            return redirect()->to('/surat');
+        }
     }
 
     public function home($page = 'sign_up')

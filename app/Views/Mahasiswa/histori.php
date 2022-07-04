@@ -15,8 +15,8 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>NPM</th>
-                                            <th>Nama Lengkap</th>
+                                            <th>No Surat</th>
+                                            <th>Keperluan</th>
                                             <th>Jurusan</th>
                                             <th>Aksi</th>
                                             
@@ -25,9 +25,8 @@
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
-                                            <th>NPM</th>
-                                            <th>Nama Lengkap</th>
-                                            <th>Jurusan</th>
+                                            <th>No Surat</th>
+                                            <th>Keperluan</th> <th>Jurusan</th>
                                             <th>Aksi</th>
                                             
                                         </tr>
@@ -36,10 +35,10 @@
                                         <tr>
                                             <?php
                                         $i = '1';
-                if (!empty($mahasiswa)) {
+                if (!empty($histori)) {
 
 
-                    foreach ($mahasiswa as $m) :
+                    foreach ($histori as $m) :
 
                 ?>
 
@@ -47,42 +46,26 @@
                             <?= $i++; ?>
                         </th>
                         <td>
-                            <?= $m["npm_user"]; ?>
+                            <?= $m["no_aktifkuliah"]; ?>
                         </td>
                         <td>
-                            <?= $m["nama_user"]; ?>
+                            <?= $m["keterangan_aktifkuliah"]; ?>
                         </td>
 
                         <td>
-                            <?php
-                            $key = $m["jurusan_user"];
-                            if ($key == 1) {
-                                echo "Manajemen";
-                            }
-                            if ($key == 2) {
-                                echo "Akuntansi";
-                            }
-                            if ($key == 3) {
-                                echo "Bisnis Digital";
-                            }
-                            if ($key == 4) {
-                                echo "Manajemen Perpajakan";
-                            }
-
-
-
-
-                            ?>
+                        
 
 
                         </td>
 
                         <td>
+                        <?php if ($m['confirm_aktifkuliah']>0){
+                      ?>       <button class="btn btn-warning"  href="#"  disabled>Telah Disahkan</button>
+                        <?php }else { ?>
+                            <a class="btn btn-primary" href="<?= base_url('mahasiswa/konfirm/'.$m['id_aktifkuliah']); ?>">Belum Disahkan</a>
+                           
 
-                            <a class="btn btn-success" href="<?= base_url('mahasiswa/histori/'.$m['npm_user']); ?>">Riwayat Pelayanan</a>
-                           <br> <a class="btn btn-warning" href="<?= base_url('mahasiswa/reset/'.$m['id_user']); ?>">Reset Password</a>
-
-
+                        <?php } ?>
                         </td>
             </tr>
         <?php endforeach;

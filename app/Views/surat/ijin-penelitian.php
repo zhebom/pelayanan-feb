@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <div class="text-left">
 
     <hr>
@@ -77,3 +78,4 @@
     <a class="btn btn-danger" href="<?= base_url('cip'); ?>">
         Cetak Surat
     </a>
+</div>

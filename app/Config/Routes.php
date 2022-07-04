@@ -31,13 +31,16 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Pages::index');
+$routes->get('/login', 'Pages::index');
 // autentikasi kontroller pages
-// $routes->add('', 'Pages::profil');
+//$routes->add('/', 'Pages::index');
 $routes->addRedirect('pages/profil', 'profil');
 $routes->addRedirect('pages/listuser', 'mahasiswa');
 $routes->addRedirect('pages/surat', 'surat');
 $routes->addRedirect('pages/formsurat', 'aktif-kuliah');
+$routes->addRedirect('/', '/login');
+
+
 
 $routes->get('/daftar', 'Pages::home');
 $routes->get('/aktif-kuliah', 'Pages::formsurat', ['filter' => 'auth']);

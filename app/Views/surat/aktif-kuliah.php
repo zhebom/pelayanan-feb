@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <div class="text-left">
 
     <hr>
@@ -96,3 +97,4 @@
     <a class="btn btn-danger" href="<?= base_url('pages/aktifkuliah/'); ?>">
         Cetak Surat
     </a>
+</div>
