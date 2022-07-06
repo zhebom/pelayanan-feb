@@ -42,11 +42,11 @@ class Mahasiswa extends BaseController
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
         $menuModel = new MenuModel();
-        $menu =  $menuModel->where('role_menu', $role)->findAll();
+        $menu =  $menuModel->where('role_menu', $role)->orderBy('urutan_menu','ASC')->findAll();
         $aktifModel = new AktifModel();
         
         
-      $histori =  $aktifModel->where('npm_aktifkuliah',$user)->findAll();
+      $histori =  $aktifModel->where('npm_aktifkuliah',$user)->orderBy('updated_at','desc')->findAll();
         $data = [
             'title' => "Konfirmasi Surat",
             
@@ -73,9 +73,9 @@ class Mahasiswa extends BaseController
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
         $menuModel = new MenuModel();
-        $menu =  $menuModel->where('role_menu', $role)->findAll();
+        $menu =  $menuModel->where('role_menu', $role)->orderBy('urutan_menu','ASC')->findAll();
         $aktifModel = new AktifModel();
-        $histori =  $aktifModel->where('npm_aktifkuliah',$npm_user)->findAll();
+        $histori =  $aktifModel->where('npm_aktifkuliah',$npm_user)->orderBy('updated_at','desc')->findAll();
         $data = [
             'title' => "Riwayat Pelayanan Surat",
             
@@ -101,7 +101,7 @@ class Mahasiswa extends BaseController
         $nama_user = session()->get('nama_user');
         $role = session()->get('role');
         $menuModel = new MenuModel();
-        $menu =  $menuModel->where('role_menu', $role)->findAll();
+        $menu =  $menuModel->where('role_menu', $role)->orderBy('urutan_menu','ASC')->findAll();
         $aktifModel = new AktifModel();
         $totalsuratmasuk =  $aktifModel->countAllResults('id_aktifkuliah');
         $totalsuratkonfirm =  $aktifModel->where('confirm_aktifkuliah','1')->countAllResults();
