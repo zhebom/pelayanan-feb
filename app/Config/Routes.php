@@ -42,6 +42,7 @@ $routes->addRedirect('/', '/login');
 
 
 
+
 $routes->get('/daftar', 'Pages::home');
 $routes->get('/aktif-kuliah', 'Pages::formsurat', ['filter' => 'auth']);
 $routes->get('/surat', 'Pages::surat', ['filter' => 'auth']);
@@ -50,6 +51,7 @@ $routes->get('/eip', 'Pages::editijinpenelitian', ['filter' => 'auth']);
 $routes->get('/cip', 'Pages::ijinpenelitian', ['filter' => 'auth']);
 $routes->get('/profil', 'Pages::profil', ['filter' => 'auth']);
 $routes->get('/mahasiswa', 'Pages::listuser', ['filter' => 'auth']);
+$routes->get('/riwayat', 'Mahasiswa::riwayat', ['filter' => 'auth']);
 $routes->get('/logout', 'Pages::logout', ['filter' => 'auth']);
 
 

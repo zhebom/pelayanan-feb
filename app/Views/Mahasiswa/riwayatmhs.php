@@ -1,7 +1,7 @@
 <?php if (session()->getFlashdata('msg')) : ?>
             <div class="alert alert-success"><?= session()->getFlashdata('msg') ?></div>
         <?php endif; ?>
-<?php if ($role < 3) {; ?>
+<?php if ($role = 3) {; ?>
     <div class="container-fluid">
 
                     <!-- DataTales Example -->
@@ -14,9 +14,10 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                        <th>#</th>
+                                            <th>#</th>
                                             <th>No Surat</th>
-                                            <th>Keperluan</th> 
+                                            <th>Keperluan</th>
+                                          
                                             <th>Aksi</th>
                                             
                                         </tr>
@@ -51,13 +52,13 @@
                             <?= $m["keterangan_aktifkuliah"]; ?>
                         </td>
 
-                    
+                       
 
                         <td>
                         <?php if ($m['confirm_aktifkuliah']>0){
-                      ?>       <button class="btn btn-success"   disabled>Telah Disahkan</button>
+                      ?>       <button class="btn btn-success" >Telah Disahkan Dapat Diambil</button>
                         <?php }else { ?>
-                            <a class="btn btn-danger" href="<?= base_url('mahasiswa/konfirm/'.$m['id_aktifkuliah']); ?>">Belum Disahkan</a>
+                            <a class="btn btn-danger" >Belum Disahkan</a>
                            
 
                         <?php } ?>
@@ -67,7 +68,7 @@
                 } else {
 
         ?>
-        <th colspan="3">Data Tidak Ditemukan</th>
+        <th colspan="5">Data Tidak Ditemukan</th>
     <?php
                 } ?>
                                         </tr>
