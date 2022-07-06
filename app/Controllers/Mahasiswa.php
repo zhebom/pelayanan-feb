@@ -16,7 +16,7 @@ class Mahasiswa extends BaseController
            
         ];
         $simpanModel->update($user, $data);
-        session()->setFlashdata('msg', 'Password Berhasil Dirubah');
+        session()->setFlashdata('msg', 'Password Berhasil Dirubah menjadi pancasakti');
         return redirect()->to('mahasiswa')->withInput(); 
     }
 
@@ -93,4 +93,35 @@ class Mahasiswa extends BaseController
         echo view('mahasiswa/riwayatmhs', $data);
         echo view('templates/foot', $data);
     }
+    public function dashboard()
+    {   
+        
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->findAll();
+        $aktifModel = new AktifModel();
+        $totalsuratmasuk =  $aktifModel->countAllResults('id_aktifkuliah');
+        $totalsuratkonfirm =  $aktifModel->where('confirm_aktifkuliah','1')->countAllResults();
+        $data = [
+            'title' => "Riwayat Pelayanan Surat",
+            
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'menu' => $menu,
+            'totalsurat' => $totalsuratmasuk,
+            'suratkonfirm' => $totalsuratkonfirm
+           
+        ];
+        
+        
+        
+        echo view('templates/head', $data);
+        echo view('mahasiswa/dashboard', $data);
+        echo view('templates/foot', $data);
+    }
+
 }

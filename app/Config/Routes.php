@@ -52,6 +52,7 @@ $routes->get('/cip', 'Pages::ijinpenelitian', ['filter' => 'auth']);
 $routes->get('/profil', 'Pages::profil', ['filter' => 'auth']);
 $routes->get('/mahasiswa', 'Pages::listuser', ['filter' => 'auth']);
 $routes->get('/riwayat', 'Mahasiswa::riwayat', ['filter' => 'auth']);
+$routes->get('/dashboard', 'Mahasiswa::dashboard', ['filter' => 'auth']);
 $routes->get('/logout', 'Pages::logout', ['filter' => 'auth']);
 
 
