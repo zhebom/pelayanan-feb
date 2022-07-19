@@ -18,7 +18,7 @@
                                             <th>No Surat</th>
                                             <th>Keperluan</th>
                                           
-                                            <th>Aksi</th>
+                                            <th>Keterangan</th>
                                             
                                         </tr>
                                     </thead>
@@ -27,7 +27,7 @@
                                             <th>#</th>
                                             <th>No Surat</th>
                                             <th>Keperluan</th> 
-                                            <th>Aksi</th>
+                                            <th>Keterangan</th>
                                             
                                         </tr>
                                     </tfoot>

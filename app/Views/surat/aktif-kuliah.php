@@ -1,5 +1,5 @@
 <div class="container-fluid">
-<div class="text-left">
+<div class="card-body">
 
     <hr>
     <p>Dekan Fakultas Ekonomi dan Bisnis Universitas Pancasakti Tegal menerangkan dengan
@@ -97,4 +97,5 @@
     <a class="btn btn-danger" href="<?= base_url('pages/aktifkuliah/'); ?>">
         Cetak Surat
     </a>
+</div>
 </div>

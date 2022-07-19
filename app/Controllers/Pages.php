@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\DaftarModel;
 use App\Models\SimpanModel;
 use App\Models\AktifModel;
+use App\Models\AkademikModel;
 use App\Models\MenuModel;
 use Config\View;
 use DateTime;
@@ -380,7 +381,8 @@ class Pages extends BaseController
         $role = session()->get('role');
         $logged_in = session()->get('logged_in');
         $validasi =  \Config\Services::validation();
-
+        $akdModel = new AkademikModel();
+        $thakademik =  $akdModel->first();
         $jurusan =  $this->daftarModel->findAll();
         $simpanModel = new SimpanModel();
         $profil = $simpanModel->where('npm_user', $npm_user)->first();
@@ -399,7 +401,8 @@ class Pages extends BaseController
             'logged_in' => $logged_in,
             'profil' => $profil,
             'getnosurat' => $getnosurat,
-            'menu' => $menu
+            'menu' => $menu,
+            'thakademik' => $thakademik
         ];
 
 
@@ -462,7 +465,7 @@ class Pages extends BaseController
         $surat = COUNT($getnosurat) + 1;
         $romawi = $romawi[date('m')];
         $tahun = date('Y');
-        $nomor = "$surat/K/I/FEB/UPS/$romawi/$tahun";
+        $nomor = "$surat/K/I/FEB/UPS/X/$romawi/$tahun";
         $today = date("Y-m-d H:i:s");
         $aktifModel = new AktifModel();
         $aktifModel->save([
@@ -538,7 +541,7 @@ class Pages extends BaseController
 </table>
 <br>
 <p>Adalah benar yang bersangkutan terdaftar sebagai mahasiswa Program Studi
-    ' . $jur . ' Semester ' . $sms . ' Tahun Akademik 2021/2022.</p>
+    ' . $jur . ' Semester ' . $sms . ' Tahun Akademik '.$thakademik['tahun_akademik'] .'.</p>
 <p>Mahasiswa tersebut di atas adalah anak dari orang tua :</p>
 <table>
     <tr>
@@ -714,7 +717,7 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
         $surat = COUNT($getnosurat) + 1;
         $romawi = $romawi[date('m')];
         $tahun = date('Y');
-        $nomor = "$surat/K/E/FEB/UPS/$romawi/$tahun";
+        $nomor = "$surat/K/E/FEB/UPS/X/$romawi/$tahun";
         $today = date("Y-m-d H:i:s");
         $aktifModel = new AktifModel();
         $aktifModel->save([
