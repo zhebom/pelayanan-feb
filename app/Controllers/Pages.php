@@ -764,7 +764,7 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
 <tr>
 <td>Lampiran</td>
 <td>:</td>
-<td>-</td>
+<td></td>
 <td></td>
 </tr>
 <tr>
@@ -773,6 +773,7 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
 <td><strong>Ijin Penelitian</strong></td>
 <td></td>
 </tr>
+<br>
 <tr>
 <td>Kepada</td>
 <td>:</td>
@@ -784,44 +785,71 @@ Demikian Surat Keterangan ini dibuat dengan sesungguhnya, untuk dapat dipergunak
 <td>'.$profil['alis_user'].'</td>
 </tr>
 </table>
-<p>Dengan hormat, salah satu syarat untuk menyelesaikan program sarjana (S1)
+<br>
+<table>
+<tr>
+<td width="47"></td>
+
+<td>Dengan hormat, salah satu syarat untuk menyelesaikan program sarjana (S1)
 Fakultas Ekonomi dan Bisnis mahasiswa di wajibkan mengadakan penelitian
 sebagai bahan menyusun skripsi.
 Berkenaan dengan hal itu, mohon perkenaan Bapak membantu memberi data
-yang diperlukan dalam penelitian tersebut kepada mahasiswa :</p>
+yang diperlukan dalam penelitian tersebut kepada mahasiswa :
+</td>
 
+</tr>
+</table>
 
-<table>
+<br>
+
+<table >
     <tr>
+    <td width="70"></td>
         <td>Nama</td>
         <td>:</td>
         <td>' . $nama_user . '</td>
     </tr>
     <tr>
+    <td width="70"></td>
         <td>NPM</td>
         <td>:</td>
         <td>' . $npm_user . '</td>
     </tr>
     <tr>
-        <td>Program Studi</td>
+    <td width="70"></td>
+        <td >Program Studi</td>
         <td>:</td>
         <td>' . $jur . '</td>
     </tr>
  
-    <tr>
-        <td>Judul Skripsi</td>
-        <td>:</td>
-        <td>' . $profil['skripsi_user'] . '</td>
+    <tr valign="top">
+    <td width="70"  valign="top"></td>
+        <td width="80"  valign="top">Judul Skripsi</td>
+        <td  valign="top">:</td>
+        <td  valign="top">' . $profil['skripsi_user'] . '</td>
     </tr>
+   
 </table>
 <br>
+<table>
+<tr>
+<td width="47"></td>
 
-<p>Atas bantuan dan kerja sama yang baik kami ucapkan terimakasih</p>
+<td>Atas bantuan dan kerja sama yang baik kami ucapkan terimakasih<
+</td>
+
+</tr>
+</table>
+
+<br>
+
+
+
 <br>
 <br>
 <table >
 <tr>
-<td width="200"></td>
+<td width="250"></td>
 <td>Tegal, ' .
             date('d') . ' ' . $bulan[date('m')] . ' ' . date('Y')
 
