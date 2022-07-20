@@ -176,4 +176,33 @@ class Mahasiswa extends BaseController
         session()->setFlashdata('msg', 'Tahun Berhasil Dirubah');
         return redirect()->to('/tahunakd')->withInput();
     }
+
+    public function suratkeluar()
+    {   
+        
+        $id_user = session()->get('id_user');
+        $npm_user = session()->get('npm_user');
+        $nama_user = session()->get('nama_user');
+        $role = session()->get('role');
+        $menuModel = new MenuModel();
+        $menu =  $menuModel->where('role_menu', $role)->orderBy('urutan_menu','ASC')->findAll();
+        $aktifModel = new AktifModel();
+        $histori =  $aktifModel->where('confirm_aktifkuliah',"1")->orderBy('updated_at','desc')->findAll();
+        $data = [
+            'title' => "Surat Keluar",
+            
+            'id_user' => $id_user,
+            'npm_user' => $npm_user,
+            'nama_user' => $nama_user,
+            'menu' => $menu,
+            'histori' => $histori
+           
+        ];
+        
+        
+        
+        echo view('templates/head', $data);
+        echo view('mahasiswa/surat-keluar', $data);
+        echo view('templates/foot', $data);
+    }
 }

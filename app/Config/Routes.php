@@ -55,6 +55,7 @@ $routes->get('/riwayat', 'Mahasiswa::riwayat', ['filter' => 'auth']);
 $routes->get('/dashboard', 'Mahasiswa::dashboard', ['filter' => 'auth']);
 $routes->get('/logout', 'Pages::logout', ['filter' => 'auth']);
 $routes->get('/tahunakd', 'Mahasiswa::thakademik', ['filter' => 'auth']);
+$routes->get('/surat-keluar', 'Mahasiswa::suratkeluar', ['filter' => 'auth']);
 
 
 
